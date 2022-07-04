@@ -33,5 +33,4 @@ serveRequest.interceptors.response.use((response) => {
   return response.data
 }, err)
 
-// eslint-disable-next-line import/prefer-default-export
 export { serveRequest }
