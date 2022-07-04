@@ -5,7 +5,7 @@ import PageFooter from '@components/layout/PageFooter.vue'
 </script>
 
 <template>
-  <PageHeader />
+  <PageHeader :class="$route.meta.headerClass" />
   <RouterView />
   <PageFooter />
 </template>

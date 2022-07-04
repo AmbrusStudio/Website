@@ -7,9 +7,9 @@
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"]
     },
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "allowJs": true
   },
-
   "references": [
     {
       "path": "./tsconfig.config.json"

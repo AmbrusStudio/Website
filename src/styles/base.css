@@ -34,6 +34,10 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  --fm: 'Montserrat', sans-serif;
+  --ft: 'Teko', serif;
+  --fz: 'Zen Kaku Gothic New', serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -70,4 +74,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+header.world_ranger_header {
+  background: #d24f6e;
+  z-index: -3;
 }
