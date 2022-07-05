@@ -1,7 +1,7 @@
 <template>
-  <div class="shadow"></div>
   <main>
     <div class="top">
+      <div class="shadow"></div>
       <div class="hashtag text-white">
         <span>E4C: Verse</span>
         <span class="hashtag-slash">/</span>
@@ -58,8 +58,8 @@ export default {
 .shadow {
   background: url('/src/assets/images/女武士2 1.png') center no-repeat;
   height: 1024px;
-  z-index: -2;
-  top: 0;
+  z-index: 1;
+  top: -100px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -70,7 +70,6 @@ main {
 }
 
 .top {
-  z-index: -3;
   background-color: #d24f6e;
   height: 924px;
   font-weight: 500;
@@ -79,7 +78,7 @@ main {
 }
 
 .hashtag {
-  z-index: 0;
+  z-index: 2;
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -98,6 +97,7 @@ main {
   margin-left: 80px;
   display: flex;
   gap: 30px;
+  z-index: 2;
 }
 
 .number {
