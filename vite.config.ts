@@ -36,6 +36,9 @@ export default defineConfig({
           greyLight: '#A8A8A8',
           greyMedium: '#A0A4B0',
           blackBg: '#2A2A2A'
+        },
+        boxShadow: {
+          'nft-sale': '0px 4px 12px rgba(0, 0, 0, 0.15)'
         }
       }
     })
