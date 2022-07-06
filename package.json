@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@unocss/reset": "^0.41.1",
+    "@vueuse/core": "^8.8.0",
     "axios": "^0.27.2",
+    "luxon": "^2.4.0",
     "pinia": "^2.0.14",
     "swiper": "^8.2.6",
     "vue": "^3.2.37",
@@ -23,6 +25,7 @@
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@rushstack/eslint-patch": "^1.1.0",
+    "@types/luxon": "^2.3.2",
     "@types/node": "^16.11.43",
     "@unocss/preset-web-fonts": "^0.41.1",
     "@unocss/transformer-directives": "^0.41.1",
