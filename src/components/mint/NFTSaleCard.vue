@@ -1,9 +1,27 @@
 <script setup lang="ts">
+import type { NFTItemEdition } from '@/types'
+import { computed, ref } from 'vue'
+import NFTEditionRadio from './NFTEditionRadio.vue'
+import NFTCurrency from '../nft/NFTCurrency.vue'
+import { formatDatetime, isHistorical } from '@/utils'
+
 interface Props {
   className?: string
+  time: number
+  editions: NFTItemEdition[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+const edition = ref<string>('')
+const selectedEdition = computed(() => props.editions.find((e) => e.value === edition.value))
+const selectedPrice = computed(() => selectedEdition.value?.price?.toString() || '0.0')
+const selectedDate = computed(() => formatDatetime(props.time))
+const isAvailable = computed(() => isHistorical(props.time))
+const disabled = computed(() => !(isAvailable.value && selectedEdition.value))
+const buttonText = computed(() => {
+  if (isAvailable.value) return 'Mint Now'
+  return 'Coming Soon'
+})
 </script>
 
 <template>
@@ -17,11 +35,39 @@ defineProps<Props>()
         extended atmoglass canopy provides a conspicuous piloting advantage as well as a way
       </p>
     </div>
-    <button
-      class="w-full py-16px md:py-22px bg-rust text-white font-semibold text-16px md:text-24px leading-20px md:leading-28px text-center uppercase hover:bg-white hover:text-rust disabled:bg-grey-medium disabled:text-white disabled:hover:text-white"
-      disabled
-    >
-      Coming Soon
-    </button>
+    <form class="flex flex-col" action="#">
+      <div class="flex flex-col gap-12px mb-24px md:mb-36px" v-if="isAvailable">
+        <NFTEditionRadio
+          v-for="(edi, index) in editions"
+          :key="`edition-radio-${index}`"
+          :id="`edition-radio-${index}`"
+          :amount="edi.amount"
+          :price="edi.price"
+          :name="edi.name"
+          :value="edi.value"
+          :style="edi.style"
+          v-model="edition"
+        />
+      </div>
+      <div class="flex flex-col gap-2px mb-12px text-grey-medium" v-if="!disabled">
+        <p class="font-semibold text-12px leading-16px uppercase">PRICE</p>
+        <NFTCurrency
+          className="font-semibold text-32px leading-40px text-white"
+          :price="selectedPrice"
+        />
+        <div
+          class="flex flex-row flex-nowrap justify-between items-center font-normal text-14px leading-18px"
+        >
+          <p>Available through {{ selectedDate }}</p>
+          <p>{{ selectedEdition?.amount || 0 }} / {{ selectedEdition?.total || 0 }} Left</p>
+        </div>
+      </div>
+      <button
+        class="w-full py-16px md:py-22px bg-rust text-white font-semibold text-16px md:text-24px leading-20px md:leading-28px text-center uppercase hover:bg-white hover:text-rust disabled:bg-grey-medium disabled:text-white disabled:hover:text-white"
+        :disabled="disabled"
+      >
+        {{ buttonText }}
+      </button>
+    </form>
   </div>
 </template>
