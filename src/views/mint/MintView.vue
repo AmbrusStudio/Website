@@ -12,8 +12,10 @@ import NFTPropertyCard from '@components/mint/NFTPropertyCard.vue'
 
 const initData: NFTItem = {
   id: 0,
+  availableTimestamp: 0,
   bannerImages: [],
   disclaimer: { images: [], content: '' },
+  editions: [],
   introduction: [],
   properties: []
 }
@@ -28,20 +30,22 @@ watchEffect(async () => {
 
 <template>
   <PageMain>
-    <div class="flex flex-col md:gap-36px md:pt-60px pb-100px md:pb-114px">
-      <div class="flex flex-col md:flex-row flex-nowrap relative">
-        <NFTBanner :images="nftData.bannerImages" />
-        <NFTSaleCard className="md:hidden" />
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 justify-between">
-        <NFTDisclaimer :images="nftData.disclaimer.images" :content="nftData.disclaimer.content" />
-        <div
-          class="flex flex-col gap-24px md:gap-36px w-full md:w-540px p-24px md:p-0 md:ml-54px md:-mt-480px"
-        >
-          <NFTSaleCard className="hidden md:block" />
-          <NFTIntroCard :intros="nftData.introduction" />
-          <NFTPropertyCard :properties="nftData.properties" />
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-y-36px md:pt-60px pb-100px md:pb-114px">
+      <NFTBanner className="md:col-span-2" :images="nftData.bannerImages" />
+      <NFTDisclaimer
+        className="hidden md:flex"
+        :images="nftData.disclaimer.images"
+        :content="nftData.disclaimer.content"
+      />
+      <div class="grid grid-cols-1 md:gap-y-36px md:w-540px md:ml-auto md:mr-36px md:-mt-480px">
+        <NFTSaleCard :editions="nftData.editions" :time="nftData.availableTimestamp" />
+        <NFTDisclaimer
+          className="md:hidden"
+          :images="nftData.disclaimer.images"
+          :content="nftData.disclaimer.content"
+        />
+        <NFTIntroCard class="m-24px md:m-0" :intros="nftData.introduction" />
+        <NFTPropertyCard class="mx-24px md:m-0" :properties="nftData.properties" />
       </div>
     </div>
   </PageMain>
