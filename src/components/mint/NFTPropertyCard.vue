@@ -12,7 +12,7 @@ defineProps<Props>()
 
 <template>
   <div
-    class="flex flex-col gap-36px md:gap-48px p-12px md:p-36px bg-black/50"
+    class="flex flex-col gap-36px xl:gap-48px p-12px xl:p-36px bg-black/50"
     :class="[className]"
     v-if="properties"
   >

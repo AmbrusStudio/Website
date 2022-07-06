@@ -25,8 +25,8 @@ const buttonText = computed(() => {
 </script>
 
 <template>
-  <div class="p-24px md:p-36px bg-black/80 shadow-nft-sale backdrop-blur-20px" :class="[className]">
-    <div class="flex flex-col gap-4px mb-24px md:mb-36px">
+  <div class="p-24px xl:p-36px bg-black/80 shadow-nft-sale backdrop-blur-20px" :class="[className]">
+    <div class="flex flex-col gap-4px mb-24px xl:mb-36px">
       <h4 class="uppercase text-rust font-semibold text-14px leading-18px">E4C Fallen Arena</h4>
       <h3 class="text-white font-semibold text-20px leading-24px">Thorn: Bumble Fighter</h3>
       <p class="text-white font-normal text-14px leading-24px">
@@ -36,7 +36,7 @@ const buttonText = computed(() => {
       </p>
     </div>
     <form class="flex flex-col" action="#">
-      <div class="flex flex-col gap-12px mb-24px md:mb-36px" v-if="isAvailable">
+      <div class="flex flex-col gap-12px mb-24px xl:mb-36px" v-if="isAvailable">
         <NFTEditionRadio
           v-for="(edi, index) in editions"
           :key="`edition-radio-${index}`"
@@ -63,7 +63,7 @@ const buttonText = computed(() => {
         </div>
       </div>
       <button
-        class="w-full py-16px md:py-22px bg-rust text-white font-semibold text-16px md:text-24px leading-20px md:leading-28px text-center uppercase hover:bg-white hover:text-rust disabled:bg-grey-medium disabled:text-white disabled:hover:text-white"
+        class="w-full py-16px xl:py-22px bg-rust text-white font-semibold text-16px xl:text-24px leading-20px xl:leading-28px text-center uppercase hover:bg-white hover:text-rust disabled:bg-grey-medium disabled:text-white disabled:hover:text-white"
         :disabled="disabled"
       >
         {{ buttonText }}

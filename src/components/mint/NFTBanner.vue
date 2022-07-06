@@ -21,7 +21,7 @@ const imageSet = computed(() => {
 <template>
   <div class="flex flex-row flex-nowarp items-center" :class="[className]">
     <img
-      class="w-full h-auto md:w-auto md:h-480px select-none"
+      class="w-full h-auto xl:w-auto xl:h-480px select-none"
       :src="image"
       alt="NFT Item Banner"
       :srcset="imageSet"

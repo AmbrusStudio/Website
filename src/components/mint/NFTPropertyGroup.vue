@@ -22,13 +22,13 @@ const groupData = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-12px md:gap-36px">
-    <h3 class="mt-12px md:mt-0 uppercase text-rust font-bold text-14px leading-18px">
+  <div class="flex flex-col gap-12px xl:gap-36px">
+    <h3 class="mt-12px xl:mt-0 uppercase text-rust font-bold text-14px leading-18px">
       {{ title }}
     </h3>
     <div class="grid gap-36px" :class="groupDataClass">
       <div
-        class="flex flex-col gap-12px md:gap-24px"
+        class="flex flex-col gap-12px xl:gap-24px"
         v-for="(group, index) in groupData"
         :key="`group-${index}`"
       >

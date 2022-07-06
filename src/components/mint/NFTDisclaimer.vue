@@ -21,7 +21,7 @@ const swiperModules = [Autoplay, Pagination]
 </script>
 
 <template>
-  <div class="flex-col w-full md:w-652px" :class="[className]">
+  <div class="flex-col w-full xl:w-652px" :class="[className]">
     <Swiper
       class="disclaimer-swiper"
       :loop="true"
@@ -49,7 +49,7 @@ const swiperModules = [Autoplay, Pagination]
   @apply left-24px bottom-24px w-auto text-left;
 }
 .disclaimer-swiper > .swiper-pagination > .swiper-pagination-bullet {
-  @apply w-30px md:w-60px h-2px bg-none bg-white opacity-50 rounded-none;
+  @apply w-30px xl:w-60px h-2px bg-none bg-white opacity-50 rounded-none;
 }
 .disclaimer-swiper
   > .swiper-pagination
