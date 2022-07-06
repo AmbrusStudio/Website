@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { computed } from 'vue'
 
 interface Props {
+  className?: string
   images: string | string[]
   content: string
 }
@@ -20,7 +21,7 @@ const swiperModules = [Autoplay, Pagination]
 </script>
 
 <template>
-  <div class="flex flex-col w-full md:w-652px">
+  <div class="flex-col w-full md:w-652px" :class="[className]">
     <Swiper
       class="disclaimer-swiper"
       :loop="true"

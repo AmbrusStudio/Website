@@ -3,6 +3,7 @@ import { getImageSet } from '@/utils'
 import { computed } from 'vue'
 
 interface Props {
+  className?: string
   images: string | string[]
 }
 
@@ -18,7 +19,7 @@ const imageSet = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-row flex-nowarp items-center">
+  <div class="flex flex-row flex-nowarp items-center" :class="[className]">
     <img
       class="w-full h-auto md:w-auto md:h-480px select-none"
       :src="image"
