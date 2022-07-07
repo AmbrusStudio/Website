@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { ref, watchEffect } from 'vue'
+import { reactive, ref, watch, watchEffect } from 'vue'
 import { getNFTItemInfo } from '@/api'
 import type { NFTItem } from '@/types'
 import PageMain from '@components/layout/PageMain.vue'
@@ -9,6 +9,7 @@ import NFTDisclaimer from '@components/mint/NFTDisclaimer.vue'
 import NFTSaleCard from '@components/mint/NFTSaleCard.vue'
 import NFTIntroCard from '@components/mint/NFTIntroCard.vue'
 import NFTPropertyCard from '@components/mint/NFTPropertyCard.vue'
+import NFTMintModal, { type NFTModalData } from '@components/modal/NFTMintModal.vue'
 
 const initData: NFTItem = {
   id: 0,
@@ -21,6 +22,22 @@ const initData: NFTItem = {
 }
 const route = useRoute()
 const nftData = ref<NFTItem>(initData)
+const modalOpen = ref(false)
+const modalData = ref<NFTModalData>({
+  name: '',
+  images: '',
+  address: '',
+  transaction: ''
+})
+const handleModalOpen = (data?: NFTModalData) => {
+  if (!data) return
+  console.log(data)
+  modalData.value = { ...data }
+  modalOpen.value = true
+}
+const handleModalClose = () => {
+  modalOpen.value = false
+}
 
 watchEffect(async () => {
   const nftId = String(route.params?.id)
@@ -38,7 +55,11 @@ watchEffect(async () => {
         :content="nftData.disclaimer.content"
       />
       <div class="grid grid-cols-1 xl:gap-y-36px xl:w-540px xl:ml-auto xl:mr-36px xl:-mt-480px">
-        <NFTSaleCard :editions="nftData.editions" :time="nftData.availableTimestamp" />
+        <NFTSaleCard
+          :editions="nftData.editions"
+          :time="nftData.availableTimestamp"
+          :onMintComplete="handleModalOpen"
+        />
         <NFTDisclaimer
           className="xl:hidden"
           :images="nftData.disclaimer.images"
@@ -48,6 +69,14 @@ watchEffect(async () => {
         <NFTPropertyCard class="mx-24px xl:m-0" :properties="nftData.properties" />
       </div>
     </div>
+    <NFTMintModal
+      :open="modalOpen"
+      :onModalClose="handleModalClose"
+      :images="modalData.images"
+      :name="modalData.name"
+      :address="modalData.address"
+      :transaction="modalData.transaction"
+    />
   </PageMain>
 </template>
 

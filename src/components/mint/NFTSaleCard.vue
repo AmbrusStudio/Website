@@ -4,11 +4,13 @@ import { computed, ref } from 'vue'
 import NFTEditionRadio from './NFTEditionRadio.vue'
 import NFTCurrency from '../nft/NFTCurrency.vue'
 import { formatDatetime, isHistorical } from '@/utils'
+import type { NFTModalData } from '../modal/NFTMintModal.vue'
 
 interface Props {
   className?: string
   time: number
   editions: NFTItemEdition[]
+  onMintComplete?: (modalData?: NFTModalData) => void
 }
 
 const props = defineProps<Props>()
@@ -22,6 +24,15 @@ const buttonText = computed(() => {
   if (isAvailable.value) return 'Mint Now'
   return 'Coming Soon'
 })
+const handleMintClick = () => {
+  const modalData: NFTModalData = {
+    images: 'http://localhost:3000/demo/images/nft-image-537.png',
+    name: 'E4C Rangers #537',
+    address: '0x85',
+    transaction: '0x85'
+  }
+  props.onMintComplete && props.onMintComplete(modalData)
+}
 </script>
 
 <template>
@@ -65,6 +76,7 @@ const buttonText = computed(() => {
       <button
         class="w-full py-16px xl:py-22px bg-rust text-white font-semibold text-16px xl:text-24px leading-20px xl:leading-28px text-center uppercase hover:bg-white hover:text-rust disabled:bg-grey-medium disabled:text-white disabled:hover:text-white"
         :disabled="disabled"
+        @click.stop.prevent="handleMintClick"
       >
         {{ buttonText }}
       </button>

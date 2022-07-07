@@ -5,12 +5,15 @@ import IconClose from '@components/icons/IconClose.vue'
 import BaseModal from './BaseModal.vue'
 import NFTMintModalTrait from './NFTMintModalTrait.vue'
 
-interface Props {
-  open: boolean
+export type NFTModalData = {
   images: string | string[]
   name: string
   address: string
   transaction: string
+}
+
+interface Props extends NFTModalData {
+  open: boolean
   onModalClose: () => void
 }
 
