@@ -10,10 +10,13 @@ interface Props {
   className?: string
   time: number
   editions: NFTItemEdition[]
-  onMintComplete?: (modalData?: NFTModalData) => void
+}
+interface Emits {
+  (e: 'onMintComplete', data?: NFTModalData): void
 }
 
 const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 const edition = ref<string>('')
 const selectedEdition = computed(() => props.editions.find((e) => e.value === edition.value))
 const selectedPrice = computed(() => selectedEdition.value?.price?.toString() || '0.0')
@@ -31,7 +34,7 @@ const handleMintClick = () => {
     address: '0x85',
     transaction: '0x85'
   }
-  props.onMintComplete && props.onMintComplete(modalData)
+  emit('onMintComplete', modalData)
 }
 </script>
 

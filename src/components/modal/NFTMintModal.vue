@@ -12,8 +12,12 @@ export type NFTModalData = {
   transaction: string
 }
 
-interface Props extends NFTModalData {
+interface Props {
   open: boolean
+  images: string | string[]
+  name: string
+  address: string
+  transaction: string
   onModalClose: () => void
 }
 

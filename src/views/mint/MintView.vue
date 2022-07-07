@@ -31,7 +31,6 @@ const modalData = ref<NFTModalData>({
 })
 const handleModalOpen = (data?: NFTModalData) => {
   if (!data) return
-  console.log(data)
   modalData.value = { ...data }
   modalOpen.value = true
 }
@@ -58,7 +57,7 @@ watchEffect(async () => {
         <NFTSaleCard
           :editions="nftData.editions"
           :time="nftData.availableTimestamp"
-          :onMintComplete="handleModalOpen"
+          @onMintComplete="handleModalOpen"
         />
         <NFTDisclaimer
           className="xl:hidden"
