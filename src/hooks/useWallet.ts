@@ -3,6 +3,7 @@ import { BigNumber, ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import type { BaseProvider } from '@metamask/providers'
 import type { UseWallet } from '@/types'
+import { getChainInfoFromId } from '@/utils'
 
 type WalletState = {
   account: string | null
@@ -24,7 +25,7 @@ const INITIAL_STATE: WalletState = {
 const walletState = reactive({ ...INITIAL_STATE })
 const providerOptions = {} // TODO: change it
 const web3Modal = new Web3Modal({
-  network: 'mainnet', // TODO: change it
+  network: getChainInfoFromId(1)?.name || 'mainnet',
   cacheProvider: true,
   providerOptions
 })
