@@ -1,3 +1,5 @@
+export * from './wallet'
+
 export type NFTItemDisclaimer = {
   /** 商品信息图片列表 */
   images: string | string[]
