@@ -21,15 +21,16 @@ const INITIAL_STATE: WalletState = {
   ethereum: defaultProvider
 }
 
+const walletState = reactive({ ...INITIAL_STATE })
+const providerOptions = {} // TODO: change it
+const web3Modal = new Web3Modal({
+  network: 'mainnet', // TODO: change it
+  cacheProvider: true,
+  providerOptions
+})
+
 export function useWallet(): UseWallet {
   const instance = getCurrentInstance()
-  const walletState = reactive({ ...INITIAL_STATE })
-  const providerOptions = {} // TODO: change it
-  const web3Modal = new Web3Modal({
-    network: 'mainnet', // TODO: change it
-    cacheProvider: true,
-    providerOptions
-  })
 
   const clearWalletState = () => {
     walletState.account = INITIAL_STATE.account
