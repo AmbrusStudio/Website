@@ -1,15 +1,18 @@
 import { getCurrentInstance, reactive, toRefs } from 'vue'
 import { BigNumber, ethers } from 'ethers'
 import Web3Modal from 'web3modal'
-import type { BaseProvider } from '@metamask/providers'
+import type { BaseProvider as InjectedConnectorProvider } from '@metamask/providers'
 import type { UseWallet } from '@/types'
-import { getChainInfoFromId } from '@/utils'
+import { web3ModalOptions } from '@/configs'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import { getChainInfo } from '@/utils'
 
 type WalletState = {
   account: string | null
   balance: BigNumber
   chainId: number | undefined
-  provider?: BaseProvider
+  network: ethers.providers.Network | undefined
+  provider?: InjectedConnectorProvider | WalletConnectProvider
   ethereum: ethers.providers.Web3Provider
 }
 
@@ -19,16 +22,13 @@ const INITIAL_STATE: WalletState = {
   account: null,
   balance: BigNumber.from(0),
   chainId: undefined,
+  network: undefined,
   ethereum: defaultProvider
 }
 
 const walletState = reactive({ ...INITIAL_STATE })
-const providerOptions = {} // TODO: change it
-const web3Modal = new Web3Modal({
-  network: getChainInfoFromId(1)?.name || 'mainnet',
-  cacheProvider: true,
-  providerOptions
-})
+const configuredNetwork = getChainInfo()
+const web3Modal = new Web3Modal(web3ModalOptions)
 
 export function useWallet(): UseWallet {
   const instance = getCurrentInstance()
@@ -45,15 +45,18 @@ export function useWallet(): UseWallet {
     const address = await signer.getAddress()
     const balance = await signer.getBalance()
     const chainId = await signer.getChainId()
+    const network = await walletState.ethereum.getNetwork()
     console.debug('getAccountAssets::address', address)
     console.debug('getAccountAssets::balance', balance)
     console.debug('getAccountAssets::chainId', chainId)
+    console.debug('getAccountAssets::network', network)
     walletState.account = address
     walletState.balance = balance
     walletState.chainId = chainId
+    walletState.network = network
   }
 
-  const subscribeProvider = async (provider: BaseProvider) => {
+  const subscribeProvider = async (provider: InjectedConnectorProvider | WalletConnectProvider) => {
     if (!provider || !provider.on) return
 
     const ethereum = new ethers.providers.Web3Provider(provider, 'any')
@@ -71,16 +74,39 @@ export function useWallet(): UseWallet {
     provider.on('chainChanged', async (chainId: string) => {
       console.debug('Event chainChanged:', chainId)
       // Metamask strongly recommend reloading the page on chain changes
-      if (window) window.location.reload()
+      // if (window) window.location.reload()
+      // But with switch network feature, reload page will disconnect wallet
+      await getAccountAssets()
     })
   }
 
+  const switchNetwork = async (): Promise<boolean> => {
+    try {
+      await walletState?.provider?.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: `0x${configuredNetwork.chainId.toString(16)}` }]
+      })
+      return true
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  }
+
+  const checkConnectedNetwork = async () => {
+    if (walletState?.network?.chainId !== configuredNetwork.chainId) {
+      const switched = await switchNetwork()
+      if (!switched) reset()
+    }
+  }
+
   const connect = async () => {
-    const provider: BaseProvider = await web3Modal.connect()
+    const provider = await web3Modal.connect()
     walletState.provider = provider
 
     await subscribeProvider(provider)
     await getAccountAssets()
+    await checkConnectedNetwork()
   }
 
   const reset = () => {
@@ -94,7 +120,15 @@ export function useWallet(): UseWallet {
   }
 
   const isConnected = () => {
-    return !!(walletState.provider?.isConnected() && walletState.account)
+    // MataMask
+    if (typeof walletState.provider?.isConnected === 'function') {
+      return !!(walletState.provider?.isConnected() && walletState.account)
+    }
+    //  WalletConnect
+    if (walletState.provider instanceof WalletConnectProvider) {
+      return !!(walletState.provider?.connected && walletState.account)
+    }
+    return false
   }
 
   return { ...toRefs(walletState), connect, reset, getBlockNumber, isConnected }
