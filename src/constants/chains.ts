@@ -41,6 +41,7 @@ export const CHAIN_IDS_TO_NAMES = {
 }
 
 interface BaseChainInfo {
+  readonly chainId: number
   readonly docs: string
   readonly bridge?: string
   readonly explorer: string
@@ -65,6 +66,7 @@ export type ChainInfoMap = {
 }
 export const CHAIN_INFO: ChainInfoMap = {
   [SupportedChainId.MAINNET]: {
+    chainId: SupportedChainId.MAINNET,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://etherscan.io/',
     swapLink: 'https://app.uniswap.org/#/swap',
@@ -75,6 +77,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
   },
   [SupportedChainId.RINKEBY]: {
+    chainId: SupportedChainId.RINKEBY,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://rinkeby.etherscan.io/',
     swapLink: 'https://app.uniswap.org/#/swap',
@@ -85,6 +88,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Rinkeby Ether', symbol: 'rETH', decimals: 18 }
   },
   [SupportedChainId.ROPSTEN]: {
+    chainId: SupportedChainId.ROPSTEN,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://ropsten.etherscan.io/',
     swapLink: 'https://app.uniswap.org/#/swap',
@@ -95,6 +99,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Ropsten Ether', symbol: 'ropETH', decimals: 18 }
   },
   [SupportedChainId.KOVAN]: {
+    chainId: SupportedChainId.KOVAN,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://kovan.etherscan.io/',
     swapLink: 'https://app.uniswap.org/#/swap',
@@ -105,6 +110,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Kovan Ether', symbol: 'kovETH', decimals: 18 }
   },
   [SupportedChainId.GOERLI]: {
+    chainId: SupportedChainId.GOERLI,
     docs: 'https://docs.uniswap.org/',
     explorer: 'https://goerli.etherscan.io/',
     swapLink: 'https://app.uniswap.org/#/swap',
@@ -115,6 +121,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Görli Ether', symbol: 'görETH', decimals: 18 }
   },
   [SupportedChainId.OPTIMISM]: {
+    chainId: SupportedChainId.OPTIMISM,
     bridge: 'https://gateway.optimism.io/?chainId=1',
     docs: 'https://optimism.io/',
     explorer: 'https://optimistic.etherscan.io/',
@@ -129,6 +136,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
   },
   [SupportedChainId.OPTIMISTIC_KOVAN]: {
+    chainId: SupportedChainId.OPTIMISTIC_KOVAN,
     bridge: 'https://gateway.optimism.io/',
     docs: 'https://optimism.io/',
     explorer: 'https://optimistic.etherscan.io/',
@@ -147,6 +155,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     }
   },
   [SupportedChainId.ARBITRUM_ONE]: {
+    chainId: SupportedChainId.ARBITRUM_ONE,
     bridge: 'https://bridge.arbitrum.io/',
     docs: 'https://offchainlabs.com/',
     explorer: 'https://arbiscan.io/',
@@ -159,6 +168,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }
   },
   [SupportedChainId.ARBITRUM_RINKEBY]: {
+    chainId: SupportedChainId.ARBITRUM_RINKEBY,
     bridge: 'https://bridge.arbitrum.io/',
     docs: 'https://offchainlabs.com/',
     explorer: 'https://rinkeby-explorer.arbitrum.io/',
@@ -175,6 +185,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     }
   },
   [SupportedChainId.POLYGON]: {
+    chainId: SupportedChainId.POLYGON,
     bridge: 'https://wallet.polygon.technology/bridge',
     docs: 'https://polygon.io/',
     explorer: 'https://polygonscan.com/',
@@ -186,6 +197,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Polygon Matic', symbol: 'MATIC', decimals: 18 }
   },
   [SupportedChainId.POLYGON_MUMBAI]: {
+    chainId: SupportedChainId.POLYGON_MUMBAI,
     bridge: 'https://wallet.polygon.technology/bridge',
     docs: 'https://polygon.io/',
     explorer: 'https://mumbai.polygonscan.com/',
@@ -201,6 +213,7 @@ export const CHAIN_INFO: ChainInfoMap = {
     }
   },
   [SupportedChainId.BSC_MAINNET]: {
+    chainId: SupportedChainId.BSC_MAINNET,
     docs: 'https://docs.pancakeswap.finance/',
     explorer: 'https://bscscan.com/',
     swapLink: 'https://pancakeswap.finance/swap',
@@ -212,6 +225,7 @@ export const CHAIN_INFO: ChainInfoMap = {
   },
   //@TODO Content needs to be modified
   [SupportedChainId.BSC_TESTNET]: {
+    chainId: SupportedChainId.BSC_TESTNET,
     docs: 'https://docs.pancakeswap.finance/',
     explorer: 'https://testnet.bscscan.com/',
     swapLink: 'https://pancakeswap.ibhagwan.workers.dev/#/swap',
