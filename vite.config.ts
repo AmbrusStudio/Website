@@ -6,6 +6,10 @@ import Unocss from 'unocss/vite'
 import presetWebFonts from '@unocss/preset-web-fonts'
 import presetUno from '@unocss/preset-uno'
 import transformerDirective from '@unocss/transformer-directives'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+import path from 'path'
+
+const isProd = process.env.NODE_ENV === 'production'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -44,13 +48,28 @@ export default defineConfig({
           'nft-modal': '0px 4px 24px rgba(0, 0, 0, 0.4)'
         }
       }
-    })
+    }),
+    !isProd &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')]
+      })
   ],
   resolve: {
+    mainFields: ['browser', 'module', 'jsnext:main', 'jsnext'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
-      '~@': fileURLToPath(new URL('./src', import.meta.url)) // for css
+      '~@': fileURLToPath(new URL('./src', import.meta.url)), // for css
+      'readable-stream': 'vite-compatible-readable-stream',
+      util$: path.resolve(__dirname, 'node_modules/util')
+    }
+  },
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills()]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
     }
   }
   // base: './', // 设置打包路径
