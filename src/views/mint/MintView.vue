@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { reactive, ref, watch, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { getNFTItemInfo } from '@/api'
 import type { NFTItem } from '@/types'
 import PageMain from '@components/layout/PageMain.vue'

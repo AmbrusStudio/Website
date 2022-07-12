@@ -7,7 +7,6 @@ import presetWebFonts from '@unocss/preset-web-fonts'
 import presetUno from '@unocss/preset-uno'
 import transformerDirective from '@unocss/transformer-directives'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
-import path from 'path'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -60,8 +59,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
       '~@': fileURLToPath(new URL('./src', import.meta.url)), // for css
-      'readable-stream': 'vite-compatible-readable-stream',
-      util$: path.resolve(__dirname, 'node_modules/util')
+      'readable-stream': 'vite-compatible-readable-stream'
     }
   },
   build: {
@@ -72,22 +70,4 @@ export default defineConfig({
       transformMixedEsModules: true
     }
   }
-  // base: './', // 设置打包路径
-  // server: {
-  //   host: '0.0.0.0',
-  //   port: 82,
-  //   open: true, // 设置服务启动时是否自动打开浏览器
-  //   https: false,
-  //   cors: true, // 允许跨域
-  //   // 设置代理，根据项目实际情况配置
-  //   proxy: {
-  //     '/NFT-API/': {
-  //       // target: 'http://api.ambrus.studio/api/v1/',
-  //       target: 'http://api.nft.com/api/v1/',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/NFT-API/, '')
-  //     }
-  //   }
-  // },
-  // productionSourceMap: false
 })
