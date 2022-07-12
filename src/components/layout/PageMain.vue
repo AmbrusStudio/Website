@@ -1,5 +1,5 @@
 <template>
-  <main id="main" class="bg-black-bg bg-cover bg-top bg-repeat-y">
+  <main id="main" class="pt-100px bg-black-bg bg-cover bg-top bg-repeat-y">
     <div class="max-w-1264px mx-auto">
       <slot />
     </div>

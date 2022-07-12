@@ -78,10 +78,3 @@ watchEffect(async () => {
     />
   </PageMain>
 </template>
-
-<style scoped>
-#header {
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-}
-</style>
