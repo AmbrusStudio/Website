@@ -8,7 +8,7 @@ defineProps<Props>()
 
 <template>
   <div
-    class="nav-item flex flex-row flex-nowrap justify-center items-center px-24px cursor-pointer"
+    class="nav-item flex flex-row flex-nowrap justify-center items-center h-80px xl:h-auto px-24px cursor-pointer"
     :class="[className]"
   >
     <div class="nav-item__line absolute left-0 h-2px w-0 bg-rust" />

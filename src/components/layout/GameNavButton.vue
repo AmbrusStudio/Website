@@ -13,7 +13,7 @@ defineProps<Props>()
 <template>
   <ExternalLink :to="getMainSiteLink(to)" :title="name">
     <p
-      class="px-36px bg-black-bg rounded-8px font-bold text-20px leading-60px text-white text-center uppercase cursor-pointer"
+      class="px-24px xl:px-36px bg-black-bg rounded-8px font-bold text-16px xl:text-20px leading-32px xl:leading-60px text-white text-center uppercase cursor-pointer"
     >
       {{ name }}
     </p>
