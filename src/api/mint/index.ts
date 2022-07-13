@@ -101,6 +101,6 @@ const demoNFTItem: NFTItem = {
   ]
 }
 
-export async function getNFTItemInfo(id: number | string): Promise<NFTItem> {
+export async function getNFTItemInfo(): Promise<NFTItem> {
   return demoNFTItem
 }
