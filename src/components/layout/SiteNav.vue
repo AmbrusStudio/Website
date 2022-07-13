@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+
 import { getMainSiteLink } from '@/utils'
+
 import IconArrowDown from '../icons/IconArrowDown.vue'
 import ExternalLink from '../link/ExternalLink.vue'
-import NavItem from './NavItem.vue'
 import GamesNav from './GamesNav.vue'
+import NavItem from './NavItem.vue'
 
 interface Emits {
   (e: 'onGamesClick', open: boolean): void

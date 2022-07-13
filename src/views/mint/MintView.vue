@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
-import { getNFTItemInfo } from '@/api'
-import type { NFTItem } from '@/types'
 import PageMain from '@components/layout/PageMain.vue'
 import NFTBanner from '@components/mint/NFTBanner.vue'
 import NFTDisclaimer from '@components/mint/NFTDisclaimer.vue'
-import NFTSaleCard from '@components/mint/NFTSaleCard.vue'
 import NFTIntroCard from '@components/mint/NFTIntroCard.vue'
 import NFTPropertyCard from '@components/mint/NFTPropertyCard.vue'
+import NFTSaleCard from '@components/mint/NFTSaleCard.vue'
 import NFTMintModal, { type NFTModalData } from '@components/modal/NFTMintModal.vue'
+import { ref, watchEffect } from 'vue'
+
+import { getNFTItemInfo } from '@/api'
+import type { NFTItem } from '@/types'
 
 const initData: NFTItem = {
   id: 0,

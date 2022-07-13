@@ -1,4 +1,5 @@
 import { getResponsiveMaterial } from '@/utils'
+
 import { getBlockInfoApi } from '../block'
 
 type BlockInfoHeader = {

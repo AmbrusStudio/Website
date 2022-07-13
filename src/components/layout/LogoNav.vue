@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { getMainSiteLink } from '@/utils'
-import ExternalLink from '../link/ExternalLink.vue'
+
 import IconAmbrus from '../icons/IconAmbrus.vue'
+import ExternalLink from '../link/ExternalLink.vue'
 </script>
 
 <template>

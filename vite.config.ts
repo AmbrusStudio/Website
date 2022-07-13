@@ -1,12 +1,11 @@
-import { fileURLToPath, URL } from 'url'
-
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import Unocss from 'unocss/vite'
-import presetWebFonts from '@unocss/preset-web-fonts'
 import presetUno from '@unocss/preset-uno'
+import presetWebFonts from '@unocss/preset-web-fonts'
 import transformerDirective from '@unocss/transformer-directives'
+import vue from '@vitejs/plugin-vue'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
+import Unocss from 'unocss/vite'
+import { fileURLToPath, URL } from 'url'
+import { defineConfig } from 'vite'
 
 const isProd = process.env.NODE_ENV === 'production'
 

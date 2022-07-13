@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getMainSiteLink } from '@/utils'
+
 import ExternalLink from '../link/ExternalLink.vue'
 
 interface Props {

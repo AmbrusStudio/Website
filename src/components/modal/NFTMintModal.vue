@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { getImageSet } from '@/utils'
 import IconClose from '@components/icons/IconClose.vue'
+import { computed } from 'vue'
+
+import { getImageSet } from '@/utils'
+
 import BaseModal from './BaseModal.vue'
 import NFTMintModalTrait from './NFTMintModalTrait.vue'
 

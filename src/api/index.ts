@@ -1,2 +1,2 @@
-export * from './mint'
 export * from './layout'
+export * from './mint'

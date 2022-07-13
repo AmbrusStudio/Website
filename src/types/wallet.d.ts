@@ -1,5 +1,5 @@
-import type { Ref } from 'vue'
 import type { BigNumber } from 'ethers'
+import type { Ref } from 'vue'
 
 export type AccountType = 'contract' | 'normal'
 

@@ -1,8 +1,9 @@
+import WalletConnect from '@walletconnect/web3-provider'
 import type {
   ICoreOptions as Web3ModalOptions,
   IProviderOptions as ProviderOptions
 } from 'web3modal'
-import WalletConnect from '@walletconnect/web3-provider'
+
 import { getChainInfo, getInfuraId } from '@/utils'
 
 const network = getChainInfo().name

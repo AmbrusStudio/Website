@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NFTItemProperty } from '@/types'
+
 import NFTPropertyGroup from './NFTPropertyGroup.vue'
 
 interface Props {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { getImageSet } from '@/utils'
 import { computed } from 'vue'
+
+import { getImageSet } from '@/utils'
 
 interface Props {
   className?: string

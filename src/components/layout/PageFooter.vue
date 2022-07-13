@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import IconAmbrus from '../icons/IconAmbrus.vue'
 import ImageAmbrusStudio from '../images/ImageAmbrusStudio.vue'
-import SocialNav from './SocialNav.vue'
 import FooterNavItem from './FooterNavItem.vue'
 import NewsletterSubscribe from './NewsletterSubscribe.vue'
+import SocialNav from './SocialNav.vue'
 </script>
 
 <template>

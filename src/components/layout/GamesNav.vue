@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import GameNavTitle from './GameNavTitle.vue'
-import GameNavButton from './GameNavButton.vue'
-import GameNavImage from './GameNavImage.vue'
 import GameImg1 from '@/assets/images/header/games-nav-1.png'
 import GameImg2 from '@/assets/images/header/games-nav-2.png'
 import GameImg3 from '@/assets/images/header/games-nav-3.png'
+
+import GameNavButton from './GameNavButton.vue'
+import GameNavImage from './GameNavImage.vue'
+import GameNavTitle from './GameNavTitle.vue'
 
 interface Props {
   open: boolean

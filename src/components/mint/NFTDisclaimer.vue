@@ -2,6 +2,7 @@
 import 'swiper/css'
 import 'swiper/css/autoplay'
 import 'swiper/css/pagination'
+
 import { Autoplay, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { computed } from 'vue'

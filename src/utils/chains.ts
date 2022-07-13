@@ -1,10 +1,10 @@
+import type { ChainInfo } from '@/constants/chains'
 import {
   CHAIN_IDS_TO_NAMES,
   CHAIN_INFO,
   DefaultChainId,
   SupportedChainId
 } from '@/constants/chains'
-import type { ChainInfo } from '@/constants/chains'
 
 export function getChainIdFromName(name: string): number | undefined {
   const entry = Object.entries(CHAIN_IDS_TO_NAMES).find(([, n]) => n === name)

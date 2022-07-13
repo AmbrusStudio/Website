@@ -1,5 +1,5 @@
-import Axios, { AxiosError } from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import Axios, { AxiosError } from 'axios'
 
 class Request {
   public readonly client: AxiosInstance

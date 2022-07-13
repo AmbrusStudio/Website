@@ -9,5 +9,10 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript/recommended',
     '@vue/eslint-config-prettier'
-  ]
+  ],
+  plugins: ['simple-import-sort'],
+  rules: {
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error'
+  }
 }

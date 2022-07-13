@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
-import { stringSlice } from '@/utils'
+
 import { useWallet } from '@/hooks'
+import { stringSlice } from '@/utils'
+
+import IconHeaderClose from '../icons/IconHeaderClose.vue'
+import IconHeaderMenu from '../icons/IconHeaderMenu.vue'
+import GamesNav from './GamesNav.vue'
+import LogoNav from './LogoNav.vue'
 import SiteNav from './SiteNav.vue'
 import SocialNav from './SocialNav.vue'
-import LogoNav from './LogoNav.vue'
 import WalletButton from './WalletButton.vue'
-import GamesNav from './GamesNav.vue'
-import IconHeaderMenu from '../icons/IconHeaderMenu.vue'
-import IconHeaderClose from '../icons/IconHeaderClose.vue'
 
 const isMobile = ref(false)
 const gamesNavOpen = ref(false)

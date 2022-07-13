@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
-import type { NFTItemEditionStyle } from '@/types'
 import { computed, reactive } from 'vue'
+
+import type { NFTItemEditionStyle } from '@/types'
+
 import NFTCurrency from '../nft/NFTCurrency.vue'
 
 interface Props {

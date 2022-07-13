@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type { NFTItemEdition } from '@/types'
 import { computed, ref } from 'vue'
-import NFTEditionRadio from './NFTEditionRadio.vue'
-import NFTCurrency from '../nft/NFTCurrency.vue'
-import { formatDatetime, isHistorical } from '@/utils'
-import type { NFTModalData } from '../modal/NFTMintModal.vue'
+
 import { useWallet } from '@/hooks'
+import type { NFTItemEdition } from '@/types'
+import { formatDatetime, isHistorical } from '@/utils'
+
+import type { NFTModalData } from '../modal/NFTMintModal.vue'
+import NFTCurrency from '../nft/NFTCurrency.vue'
+import NFTEditionRadio from './NFTEditionRadio.vue'
 
 interface Props {
   className?: string

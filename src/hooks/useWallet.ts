@@ -1,10 +1,11 @@
-import { getCurrentInstance, reactive, toRefs } from 'vue'
-import { BigNumber, ethers } from 'ethers'
-import Web3Modal from 'web3modal'
 import type { BaseProvider as InjectedConnectorProvider } from '@metamask/providers'
-import type { UseWallet } from '@/types'
-import { web3ModalOptions } from '@/configs'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import { BigNumber, ethers } from 'ethers'
+import { getCurrentInstance, reactive, toRefs } from 'vue'
+import Web3Modal from 'web3modal'
+
+import { web3ModalOptions } from '@/configs'
+import type { UseWallet } from '@/types'
 import { getChainInfo } from '@/utils'
 
 type WalletState = {

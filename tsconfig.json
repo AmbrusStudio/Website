@@ -8,7 +8,8 @@
       "@components/*": ["./src/components/*"]
     },
     "jsx": "preserve",
-    "allowJs": true
+    "allowJs": true,
+    "module": "esnext"
   },
 
   "references": [

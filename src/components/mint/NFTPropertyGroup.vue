@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import type { NFTPropertyMode, NFTPropertyData as PropertyData } from '@/types'
-import { arrayGroupByCount } from '@/utils'
 import { computed, reactive } from 'vue'
+
+import type { NFTPropertyData as PropertyData, NFTPropertyMode } from '@/types'
+import { arrayGroupByCount } from '@/utils'
+
 import NFTPropertyData from './NFTPropertyData.vue'
 
 interface Props {

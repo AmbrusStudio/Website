@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { getHeaderLinks, type HeaderLink } from '@/api'
+
+import { type HeaderLink, getHeaderLinks } from '@/api'
+
 import SocialNavItem from './SocialNavItem.vue'
 
 interface Props {
