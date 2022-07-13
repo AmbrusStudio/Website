@@ -2,7 +2,9 @@
   <div class="flex flex-col">
     <form>
       <label for="newsletter-email-input">
-        <p class="font-medium text-16px leading-28px text-white uppercase">Newsletter</p>
+        <p class="hidden xl:block font-medium text-16px leading-28px text-white uppercase">
+          Newsletter
+        </p>
         <div class="flex flex-row flex-nowrap items-center">
           <input
             class="flex flex-row flex-nowrap items-center px-16px py-10px font-normal text-14px leading-28px text-black bg-white placeholder:text-grey-light"
