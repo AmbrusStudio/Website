@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
 import { ref, watchEffect } from 'vue'
 import { getNFTItemInfo } from '@/api'
 import type { NFTItem } from '@/types'
@@ -20,7 +19,6 @@ const initData: NFTItem = {
   introduction: [],
   properties: []
 }
-const route = useRoute()
 const nftData = ref<NFTItem>(initData)
 const modalOpen = ref(false)
 const modalData = ref<NFTModalData>({
@@ -39,8 +37,7 @@ const handleModalClose = () => {
 }
 
 watchEffect(async () => {
-  const nftId = String(route.params?.id)
-  nftData.value = await getNFTItemInfo(nftId)
+  nftData.value = await getNFTItemInfo()
 })
 </script>
 
