@@ -9,10 +9,10 @@ defineProps<Props>()
 
 <template>
   <div
-    class="modal-overlay fixed top-0 left-0 z-10 invisible opacity-0 w-full h-full transition-all overflow-auto"
+    class="modal-overlay fixed top-0 left-0 z-20 invisible opacity-0 w-full h-full transition-all overflow-auto"
     :class="{ 'modal-show': open }"
   >
-    <div class="modal-main z-20 invisible xl:top-1/2 xl:-translate-y-1/2">
+    <div class="modal-main z-30 invisible xl:top-1/2 xl:-translate-y-1/2">
       <div class="modal-content opacity-0 scale-75 transition-all" :class="[className]">
         <slot />
       </div>
