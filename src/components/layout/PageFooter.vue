@@ -10,7 +10,9 @@ import SocialNav from './SocialNav.vue'
   <footer class="p-24px xl:py-48px xl:px-0 bg-grey-dark">
     <div class="flex flex-col max-w-1264px mx-auto">
       <div class="flex flex-col xl:flex-row justify-between items-center mb-36px xl:mb-42px">
-        <div class="flex flex-col xl:flex-row flex-nowrap items-center mb-36px xl:m-0">
+        <div
+          class="flex flex-col xl:flex-row flex-nowrap items-center mb-36px xl:m-0 w-full xl:w-auto"
+        >
           <div class="flex flex-row flex-nowrap items-center w-full">
             <IconAmbrus class="h-60px w-60px xl:h-118px xl:w-118px text-white xl:mr-24px" />
             <p

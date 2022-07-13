@@ -1,13 +1,13 @@
 <template>
-  <div class="flex flex-col">
-    <form>
+  <div class="flex flex-col w-full">
+    <form class="w-full">
       <label for="newsletter-email-input">
         <p class="hidden xl:block font-medium text-16px leading-28px text-white uppercase">
           Newsletter
         </p>
         <div class="flex flex-row flex-nowrap items-center">
           <input
-            class="flex flex-row flex-nowrap items-center px-16px py-10px font-normal text-14px leading-28px text-black bg-white placeholder:text-grey-light"
+            class="flex flex-row flex-nowrap items-center w-full xl:min-w-258px px-16px py-10px font-normal text-14px leading-28px text-black bg-white placeholder:text-grey-light"
             type="email"
             name=""
             id="newsletter-email-input"
