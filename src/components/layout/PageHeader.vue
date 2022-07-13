@@ -61,7 +61,10 @@ watchEffect(() => {
           <IconHeaderClose v-else />
         </button>
       </div>
-      <div class="flex-1 flex-col xl:flex-row xl:items-center" :class="mobileMenuClass">
+      <div
+        class="flex-1 flex-col xl:flex-row xl:items-center xl:justify-between"
+        :class="mobileMenuClass"
+      >
         <SiteNav @onGamesClick="handleGamesNavClick" />
         <div
           class="flex flex-col xl:flex-row items-center gap-24px xl:gap-0 px-32px py-36px xl:p-0 bg-black-bg xl:bg-transparent"

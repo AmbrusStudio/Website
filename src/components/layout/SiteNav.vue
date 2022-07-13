@@ -21,7 +21,7 @@ const handleGamesNavClick = () => {
 
 <template>
   <nav
-    class="flex flex-col xl:flex-row items-center gap-0 xl:gap-24px px-24px xl:p-0 w-full h-full"
+    class="flex flex-col xl:flex-row items-center gap-0 xl:gap-24px px-24px xl:p-0 h-full"
     title="Site Nav"
   >
     <ExternalLink :to="getMainSiteLink('/')" titie="Home">
