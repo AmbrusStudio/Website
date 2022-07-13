@@ -13,5 +13,6 @@ const imageSet = `${Logo1x}, ${Logo2x} 2x, ${Logo3x} 3x`
     :src="image"
     alt="Ambrus Studio Logo"
     :srcset="imageSet"
+    loading="lazy"
   />
 </template>

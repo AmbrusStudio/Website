@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import NavItem from './NavItem.vue'
-import IconArrowDown from '../icons/IconArrowDown.vue'
-import ExternalLink from '../link/ExternalLink.vue'
 import { ref } from 'vue'
 import { getMainSiteLink } from '@/utils'
+import IconArrowDown from '../icons/IconArrowDown.vue'
+import ExternalLink from '../link/ExternalLink.vue'
+import NavItem from './NavItem.vue'
 
 interface Emits {
   (e: 'onGamesClick', open: boolean): void
@@ -20,7 +20,7 @@ const handleGamesNavClick = () => {
 
 <template>
   <nav class="flex flex-row flex-1 items-center gap-24px" title="Site Nav">
-    <ExternalLink :to="getMainSiteLink('/')">
+    <ExternalLink :to="getMainSiteLink('/')" titie="Home">
       <NavItem>Home</NavItem>
     </ExternalLink>
     <div :class="{ 'router-link-active': gamesOpen }">
@@ -29,10 +29,10 @@ const handleGamesNavClick = () => {
         <IconArrowDown class="ml-8px transition-all" :class="{ 'rotate-180': gamesOpen }" />
       </NavItem>
     </div>
-    <ExternalLink :to="getMainSiteLink('/worldview')">
+    <ExternalLink :to="getMainSiteLink('/worldview')" title="World View">
       <NavItem>E4C: Verse</NavItem>
     </ExternalLink>
-    <ExternalLink :to="getMainSiteLink('/aboutus')">
+    <ExternalLink :to="getMainSiteLink('/aboutus')" title="About Us">
       <NavItem>About Us</NavItem>
     </ExternalLink>
   </nav>

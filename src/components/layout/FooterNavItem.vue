@@ -13,7 +13,7 @@ defineProps<Props>()
   <div
     class="footer-nav-item flex flex-row flex-nowrap box-content items-center h-18px px-24px font-normal text-14px text-grey-medium"
   >
-    <ExternalLink :to="to" :title="name">{{ name }}</ExternalLink>
+    <ExternalLink :to="to" :title="name" :blank="true">{{ name }}</ExternalLink>
   </div>
 </template>
 

@@ -20,18 +20,18 @@ defineProps<Props>()
         <div class="flex flex-col gap-12px">
           <GameNavTitle>Games</GameNavTitle>
           <div class="flex flex-row flex-nowrap gap-x-24px">
-            <GameNavImage to="/game/1" :img="GameImg1" />
-            <GameNavImage to="/game/2" :img="GameImg2" />
-            <GameNavImage to="/game/3" :img="GameImg3" />
+            <GameNavImage to="/game/1" :img="GameImg1" title="Game Fallen Arena" />
+            <GameNavImage to="/game/2" :img="GameImg2" title="Game Final Salvation" />
+            <GameNavImage to="/game/3" :img="GameImg3" title="Game 3" />
           </div>
         </div>
         <div class="flex flex-col gap-12px">
           <GameNavTitle>Gaming Experience</GameNavTitle>
           <div class="flex flex-row flex-nowrap gap-x-24px">
-            <GameNavButton to="/game/news/list/1">News & Dev Blogs</GameNavButton>
-            <GameNavButton to="/game/archive/1">Archive</GameNavButton>
-            <GameNavButton to="/game/1">Esports</GameNavButton>
-            <GameNavButton to="/game/1">Leaderboards</GameNavButton>
+            <GameNavButton to="/game/news/list/1" name="News & Dev Blogs" />
+            <GameNavButton to="/game/archive/1" name="Archive" />
+            <GameNavButton to="/game/1" name="Esports" />
+            <GameNavButton to="/game/1" name="Leaderboards" />
           </div>
         </div>
       </div>
