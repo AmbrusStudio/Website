@@ -12,7 +12,7 @@ export type UseWallet = {
   // connector: string | null
   // connectors: object
   // error: Error | null
-  // ethereum?: unknown
+  ethereum?: ethers.providers.Web3Provider
   // networkName: string | null
   // status: Status
   // type: AccountType | null
