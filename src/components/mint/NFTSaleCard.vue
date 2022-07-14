@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { useWallet } from '@/hooks'
+import { useMintContract, useWallet } from '@/hooks'
 import type { NFTItemEdition } from '@/types'
 import { formatDatetime, isHistorical } from '@/utils'
 
@@ -20,9 +20,11 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
-const { isConnected } = useWallet()
+const { ethereum, isConnected } = useWallet()
+const { mintContract } = useMintContract(ethereum)
 const connected = computed(() => isConnected())
 const edition = ref<string>('')
+const isMinting = ref(false)
 const selectedEdition = computed(() => props.editions.find((e) => e.value === edition.value))
 const selectedPrice = computed(() => selectedEdition.value?.price?.toString() || '0.0')
 const selectedDate = computed(() => formatDatetime(props.time))
@@ -33,14 +35,25 @@ const buttonText = computed(() => {
   if (isAvailable.value) return 'Mint Now'
   return 'Coming Soon'
 })
-const handleMintClick = () => {
-  const modalData: NFTModalData = {
-    images: 'http://localhost:3000/demo/images/nft-image-537.png',
-    name: 'E4C Rangers #537',
-    address: '0x85',
-    transaction: '0x85'
+const handleMintClick = async () => {
+  if (!mintContract.value) return
+  try {
+    isMinting.value = true
+    const address = mintContract.value.address
+    const totalMinted = await mintContract.value.totalMinted()
+    console.log('totalMinted', totalMinted.toString())
+    const modalData: NFTModalData = {
+      images: 'http://localhost:3000/demo/images/nft-image-537.png',
+      name: 'E4C Rangers #537',
+      address,
+      transaction: '0x85'
+    }
+    emit('onMintComplete', modalData)
+  } catch (error) {
+    console.error('Mint error', error)
+  } finally {
+    isMinting.value = false
   }
-  emit('onMintComplete', modalData)
 }
 </script>
 
@@ -84,7 +97,7 @@ const handleMintClick = () => {
       </div>
       <button
         class="w-full py-16px xl:py-22px bg-rust text-white font-semibold text-16px xl:text-24px leading-20px xl:leading-28px text-center uppercase hover:bg-white hover:text-rust disabled:bg-grey-medium disabled:text-white disabled:hover:text-white"
-        :disabled="disabled"
+        :disabled="disabled || isMinting"
         @click.stop.prevent="handleMintClick"
       >
         {{ buttonText }}
