@@ -22,7 +22,6 @@ export type HeaderLink = { img: string; url: string }
 
 export async function getHeaderLinks(): Promise<HeaderLink[]> {
   const { data: headerData } = await getBlockInfoApi<BlockInfoHeader[]>('headerIcon')
-  console.log('headerData', headerData)
   const sortHeader = headerData.sort((l, r) => (l.sort = r.sort))
   const headers = sortHeader.map((header) => {
     const { material, material_mob, url } = header
