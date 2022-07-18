@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
+import { useWindowSize } from '@vueuse/core'
+import { computed, ref } from 'vue'
 
 import { useWallet } from '@/hooks'
 import { stringSlice } from '@/utils'
@@ -12,7 +13,7 @@ import SiteNav from './SiteNav.vue'
 import SocialNav from './SocialNav.vue'
 import WalletButton from './WalletButton.vue'
 
-const isMobile = ref(false)
+const { width } = useWindowSize()
 const gamesNavOpen = ref(false)
 const mobileMenuOpen = ref(false)
 const { account, connect, reset, isConnected } = useWallet()
@@ -22,7 +23,7 @@ const address = computed(() => {
   return ''
 })
 const mobileMenuClass = computed(() => {
-  if (isMobile.value) {
+  if (width.value < 1280) {
     if (mobileMenuOpen.value) return 'flex'
     return 'hidden'
   } else return 'flex'
@@ -39,12 +40,6 @@ const handleGamesNavClick = (open: boolean) => {
 const handleMobileMenuToggle = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
-
-watchEffect(() => {
-  if (window && window.innerWidth < 1280) {
-    isMobile.value = true
-  }
-})
 </script>
 
 <template>
