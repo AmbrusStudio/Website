@@ -1,16 +1,30 @@
 export * from './wallet'
 
+export type NFTItemInfo = {
+  /**
+   * NFT Banner 图，为列表的时候为多分辨率图片，
+   * 文件名需包含 @ 符号，如 @1x @2x @3x
+   */
+  images: string | string[]
+  /** NFT 阵营类型 */
+  type: string
+  /** NFT 名字 */
+  name: string
+  /** NFT 介绍，Markdown */
+  content: string
+}
+
 export type NFTItemDisclaimer = {
   /** 商品信息图片列表 */
   images: string | string[]
-  /** 免责声明正文 */
+  /** 免责声明正文，Markdown */
   content: string
 }
 
 export type NFTItemIntro = {
   /** 商品介绍段落标题 */
   title: string
-  /** 商品介绍正文，支持 \n 换行 */
+  /** 商品介绍正文，Markdown */
   content: string
 }
 
@@ -19,7 +33,7 @@ export type NFTPropertyMode = 'mode-3' | 'mode-6' | 'mode-9'
 export type NFTPropertyData = {
   /** 属性名称 */
   key: string
-  /** 属性值 */
+  /** 属性值，纯字符串，不支持 Markdown */
   value: string
 }
 
@@ -34,42 +48,32 @@ export type NFTItemProperty = {
 
 export type NFTItemEditionStyle = {
   /**
-   * 商品类型颜色渐变，CSS 字符串，
+   * 版本背景颜色渐变，CSS 字符串，
    * 如 "linear-gradient(90deg, #E4AA15 0%, #F0C75D 100%)"
    */
   background: string
   /**
-   * 商品类型发光效果，CSS 字符串，
+   * 版本选中的发光效果，CSS 字符串，
    * 如 "0px 0px 8px 1px #FFB800, inset 4px 0px 10px rgba(0, 0, 0, 0.15)"
    */
   boxShadow: string
 }
 
 export type NFTItemEdition = {
-  /** 商品类型名称 */
+  /** 版本名称 */
   name: string
-  /** 商品类型值（用于 API 传参） */
+  /** 版本识别值（唯一，用于单选识别） */
   value: string
-  /** 商品类型剩余数量，为 0 显示 "Sold Out" */
-  amount: number
-  /** 商品类型总量，用于展示 "<amount>/<total> Left" */
+  /** 版本对应的 AmbrusStudioSaler 合约地址 */
+  contract: string
+  /** 版本总量，用于展示 "<amount>/<total> Left" */
   total: number
-  /** 商品类型价格 */
-  price: number
-  /** 商品类型颜色 */
+  /** 版本颜色配置 */
   style: NFTItemEditionStyle
 }
 
 export type NFTItem = {
-  /** NFT 的唯一 ID */
-  id: string | number
-  /** NFT 发售时间，UNIX 时间戳，前端会进行时区换算 */
-  availableTimestamp: number
-  /**
-   * NFT Banner 图，为列表的时候为多分辨率图片，
-   * 文件名需包含 @ 符号，如 @1x @2x @3x
-   */
-  bannerImages: string | string[]
+  information: NFTItemInfo
   /** NFT 商品信息和免责声明 */
   disclaimer: NFTItemDisclaimer
   /** NFT 商品类型 */

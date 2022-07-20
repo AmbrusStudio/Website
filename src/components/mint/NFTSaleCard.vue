@@ -4,7 +4,7 @@ import { computed, reactive, ref, watch } from 'vue'
 
 import type { AmbrusStudioSaler } from '@/contracts'
 import { useERC721Contract, useSalerContract, useWallet } from '@/hooks'
-import type { NFTItemEdition } from '@/types'
+import type { NFTItemEdition, NFTItemInfo } from '@/types'
 import { formatDatetime, isHistorical } from '@/utils'
 
 import type { NFTModalData } from '../modal/NFTMintModal.vue'
@@ -13,6 +13,7 @@ import NFTEditionRadio from './NFTEditionRadio.vue'
 
 interface Props {
   className?: string
+  info: NFTItemInfo
   editions: NFTItemEdition[]
 }
 interface Emits {
@@ -93,13 +94,9 @@ watch(
 <template>
   <div class="p-24px xl:p-36px bg-black/80 shadow-nft-sale backdrop-blur-20px" :class="[className]">
     <div class="flex flex-col gap-4px mb-24px xl:mb-36px">
-      <h4 class="uppercase text-rust font-semibold text-14px leading-18px">E4C Fallen Arena</h4>
-      <h3 class="text-white font-semibold text-20px leading-24px">Thorn: Bumble Fighter</h3>
-      <p class="text-white font-normal text-14px leading-24px">
-        Pearce's fixed-wing X6 provides a surprising amount of comfortable living space aboard a
-        compact and highly agile fighter patrol ship. A supremely capable combat vessel with an
-        extended atmoglass canopy provides a conspicuous piloting advantage as well as a way
-      </p>
+      <h4 class="uppercase text-rust font-semibold text-14px leading-18px">{{ info.type }}</h4>
+      <h3 class="text-white font-semibold text-20px leading-24px">{{ info.name }}</h3>
+      <p class="text-white font-normal text-14px leading-24px">{{ info.content }}</p>
     </div>
     <form class="flex flex-col" action="#">
       <div class="flex flex-col gap-12px mb-24px xl:mb-36px" v-if="isAvailable">
