@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ethers } from 'ethers'
+import { computed, reactive, ref, watch } from 'vue'
 
-import { useSalerContract, useWallet } from '@/hooks'
+import type { AmbrusStudioSaler } from '@/contracts'
+import { useERC721Contract, useSalerContract, useWallet } from '@/hooks'
 import type { NFTItemEdition } from '@/types'
 import { formatDatetime, isHistorical } from '@/utils'
 
@@ -11,25 +13,30 @@ import NFTEditionRadio from './NFTEditionRadio.vue'
 
 interface Props {
   className?: string
-  time: number
   editions: NFTItemEdition[]
 }
 interface Emits {
   (e: 'onMintComplete', data?: NFTModalData): void
 }
+interface EditionData {
+  price: string
+  amount: number
+  total: number
+  startTime: number
+}
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 const { ethereum, isConnected } = useWallet()
-const salerContract = useSalerContract(ethereum)
-const connected = computed(() => isConnected())
+
+const editionData = reactive<EditionData>({ price: '0', amount: 0, total: 0, startTime: 0 })
+const salerContract = ref<AmbrusStudioSaler | undefined>(undefined)
 const edition = ref<string>('')
 const isMinting = ref(false)
-const selectedEdition = computed(() => props.editions.find((e) => e.value === edition.value))
-const selectedPrice = computed(() => selectedEdition.value?.price?.toString() || '0.0')
-const selectedDate = computed(() => formatDatetime(props.time))
-const isAvailable = computed(() => isHistorical(props.time))
-const disabled = computed(() => !(isAvailable.value && selectedEdition.value && connected.value))
+const connected = computed(() => isConnected())
+const selectedDate = computed(() => formatDatetime(editionData.startTime))
+const isAvailable = computed(() => isHistorical(editionData.startTime))
+const disabled = computed(() => !(isAvailable.value && editionData.total && connected.value))
 const buttonText = computed(() => {
   if (!connected.value) return 'Connect Wallet'
   if (isAvailable.value) return 'Mint Now'
@@ -55,6 +62,32 @@ const handleMintClick = async () => {
     isMinting.value = false
   }
 }
+
+watch(
+  edition,
+  async (value: string) => {
+    const selected = props.editions.find((e) => e.value === value)
+    if (selected) {
+      const _salerContract = useSalerContract(ethereum, selected.contract)
+      if (!_salerContract.value) return
+      salerContract.value = _salerContract.value
+
+      const price = await _salerContract.value.price()
+      const total = selected.total
+      const startTime = await _salerContract.value.saleStart()
+      editionData.price = ethers.utils.formatEther(price)
+      editionData.total = total
+      editionData.startTime = startTime.toNumber()
+
+      const nftAddress = await _salerContract.value.nft()
+      const nftContract = useERC721Contract(ethereum, nftAddress)
+      if (!nftContract.value) return
+      const amount = await nftContract.value.balanceOf(_salerContract.value.address)
+      editionData.amount = amount.toNumber()
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -71,13 +104,12 @@ const handleMintClick = async () => {
     <form class="flex flex-col" action="#">
       <div class="flex flex-col gap-12px mb-24px xl:mb-36px" v-if="isAvailable">
         <NFTEditionRadio
-          v-for="(edi, index) in editions"
-          :key="`edition-radio-${index}`"
-          :id="`edition-radio-${index}`"
-          :amount="edi.amount"
-          :price="edi.price"
+          v-for="edi in editions"
+          :key="`edition-radio-${edi.value}`"
+          :id="`edition-radio-${edi.value}`"
           :name="edi.name"
           :value="edi.value"
+          :contract="edi.contract"
           :style="edi.style"
           v-model="edition"
         />
@@ -86,13 +118,13 @@ const handleMintClick = async () => {
         <p class="font-semibold text-12px leading-16px uppercase">PRICE</p>
         <NFTCurrency
           className="font-semibold text-32px leading-40px text-white"
-          :price="selectedPrice"
+          :price="editionData.price"
         />
         <div
           class="flex flex-row flex-nowrap justify-between items-center font-normal text-14px leading-18px"
         >
           <p>Available through {{ selectedDate }}</p>
-          <p>{{ selectedEdition?.amount || 0 }} / {{ selectedEdition?.total || 0 }} Left</p>
+          <p>{{ editionData.amount }} / {{ editionData.total }} Left</p>
         </div>
       </div>
       <button
