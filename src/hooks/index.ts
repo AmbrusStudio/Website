@@ -1,2 +1,2 @@
-export * from './useMintContract'
+export * from './useContract'
 export * from './useWallet'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { useMintContract, useWallet } from '@/hooks'
+import { useSalerContract, useWallet } from '@/hooks'
 import type { NFTItemEdition } from '@/types'
 import { formatDatetime, isHistorical } from '@/utils'
 
@@ -21,7 +21,7 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 const { ethereum, isConnected } = useWallet()
-const { mintContract } = useMintContract(ethereum)
+const salerContract = useSalerContract(ethereum)
 const connected = computed(() => isConnected())
 const edition = ref<string>('')
 const isMinting = ref(false)
@@ -36,12 +36,12 @@ const buttonText = computed(() => {
   return 'Coming Soon'
 })
 const handleMintClick = async () => {
-  if (!mintContract.value) return
+  if (!salerContract.value) return
   try {
     isMinting.value = true
-    const address = mintContract.value.address
-    const totalMinted = await mintContract.value.totalMinted()
-    console.log('totalMinted', totalMinted.toString())
+    const address = salerContract.value.address
+    const saleStart = await salerContract.value.saleStart()
+    console.log('saleStart', saleStart.toString())
     const modalData: NFTModalData = {
       images: 'http://localhost:3000/demo/images/nft-image-537.png',
       name: 'E4C Rangers #537',
