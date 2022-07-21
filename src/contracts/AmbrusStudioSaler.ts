@@ -25,6 +25,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
     'WITHDRAWER_ROLE()': FunctionFragment
     'boughtCount(address)': FunctionFragment
     'configSale(uint256,uint256)': FunctionFragment
+    'count()': FunctionFragment
     'getRoleAdmin(bytes32)': FunctionFragment
     'grantAdmin(address)': FunctionFragment
     'grantRole(bytes32,address)': FunctionFragment
@@ -33,7 +34,6 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
     'isWhitelistAddress(address,bytes32[])': FunctionFragment
     'merkleRoot()': FunctionFragment
     'nft()': FunctionFragment
-    'onERC721Received(address,address,uint256,bytes)': FunctionFragment
     'price()': FunctionFragment
     'publicSale()': FunctionFragment
     'renounceRole(bytes32,address)': FunctionFragment
@@ -42,6 +42,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
     'revokeWithdrawer(address)': FunctionFragment
     'saleStart()': FunctionFragment
     'setMerkleRoot(bytes32)': FunctionFragment
+    'soldCount()': FunctionFragment
     'supportsInterface(bytes4)': FunctionFragment
     'whitelistSale(bytes32[])': FunctionFragment
     'whitelistSaleDuration()': FunctionFragment
@@ -54,6 +55,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
       | 'WITHDRAWER_ROLE'
       | 'boughtCount'
       | 'configSale'
+      | 'count'
       | 'getRoleAdmin'
       | 'grantAdmin'
       | 'grantRole'
@@ -62,7 +64,6 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
       | 'isWhitelistAddress'
       | 'merkleRoot'
       | 'nft'
-      | 'onERC721Received'
       | 'price'
       | 'publicSale'
       | 'renounceRole'
@@ -71,6 +72,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
       | 'revokeWithdrawer'
       | 'saleStart'
       | 'setMerkleRoot'
+      | 'soldCount'
       | 'supportsInterface'
       | 'whitelistSale'
       | 'whitelistSaleDuration'
@@ -84,6 +86,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
     functionFragment: 'configSale',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string
+  encodeFunctionData(functionFragment: 'count', values?: undefined): string
   encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string
   encodeFunctionData(functionFragment: 'grantAdmin', values: [PromiseOrValue<string>]): string
   encodeFunctionData(
@@ -101,15 +104,6 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
   ): string
   encodeFunctionData(functionFragment: 'merkleRoot', values?: undefined): string
   encodeFunctionData(functionFragment: 'nft', values?: undefined): string
-  encodeFunctionData(
-    functionFragment: 'onERC721Received',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
-  ): string
   encodeFunctionData(functionFragment: 'price', values?: undefined): string
   encodeFunctionData(functionFragment: 'publicSale', values?: undefined): string
   encodeFunctionData(
@@ -124,6 +118,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'revokeWithdrawer', values: [PromiseOrValue<string>]): string
   encodeFunctionData(functionFragment: 'saleStart', values?: undefined): string
   encodeFunctionData(functionFragment: 'setMerkleRoot', values: [PromiseOrValue<BytesLike>]): string
+  encodeFunctionData(functionFragment: 'soldCount', values?: undefined): string
   encodeFunctionData(
     functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
@@ -139,6 +134,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'WITHDRAWER_ROLE', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'boughtCount', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'configSale', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'count', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'grantAdmin', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result
@@ -147,7 +143,6 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'isWhitelistAddress', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'merkleRoot', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'nft', data: BytesLike): Result
-  decodeFunctionResult(functionFragment: 'onERC721Received', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'price', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'publicSale', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result
@@ -156,6 +151,7 @@ export interface AmbrusStudioSalerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'revokeWithdrawer', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'saleStart', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'setMerkleRoot', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'soldCount', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'whitelistSale', data: BytesLike): Result
   decodeFunctionResult(functionFragment: 'whitelistSaleDuration', data: BytesLike): Result
@@ -239,6 +235,8 @@ export interface AmbrusStudioSaler extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
+    count(overrides?: CallOverrides): Promise<[BigNumber]>
+
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>
 
     grantAdmin(
@@ -272,14 +270,6 @@ export interface AmbrusStudioSaler extends BaseContract {
     merkleRoot(overrides?: CallOverrides): Promise<[string]>
 
     nft(overrides?: CallOverrides): Promise<[string]>
-
-    onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>
 
     price(overrides?: CallOverrides): Promise<[BigNumber]>
 
@@ -316,6 +306,8 @@ export interface AmbrusStudioSaler extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>
 
+    soldCount(overrides?: CallOverrides): Promise<[BigNumber]>
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -344,6 +336,8 @@ export interface AmbrusStudioSaler extends BaseContract {
     _whitelistSaleDuration: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
+
+  count(overrides?: CallOverrides): Promise<BigNumber>
 
   getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>
 
@@ -378,14 +372,6 @@ export interface AmbrusStudioSaler extends BaseContract {
   merkleRoot(overrides?: CallOverrides): Promise<string>
 
   nft(overrides?: CallOverrides): Promise<string>
-
-  onERC721Received(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>
 
   price(overrides?: CallOverrides): Promise<BigNumber>
 
@@ -422,6 +408,8 @@ export interface AmbrusStudioSaler extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>
 
+  soldCount(overrides?: CallOverrides): Promise<BigNumber>
+
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
@@ -448,6 +436,8 @@ export interface AmbrusStudioSaler extends BaseContract {
       _whitelistSaleDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>
+
+    count(overrides?: CallOverrides): Promise<BigNumber>
 
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>
 
@@ -477,14 +467,6 @@ export interface AmbrusStudioSaler extends BaseContract {
 
     nft(overrides?: CallOverrides): Promise<string>
 
-    onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>
-
     price(overrides?: CallOverrides): Promise<BigNumber>
 
     publicSale(overrides?: CallOverrides): Promise<void>
@@ -508,6 +490,8 @@ export interface AmbrusStudioSaler extends BaseContract {
     saleStart(overrides?: CallOverrides): Promise<BigNumber>
 
     setMerkleRoot(_merkleRoot: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>
+
+    soldCount(overrides?: CallOverrides): Promise<BigNumber>
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
@@ -569,6 +553,8 @@ export interface AmbrusStudioSaler extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
+    count(overrides?: CallOverrides): Promise<BigNumber>
+
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>
 
     grantAdmin(
@@ -603,14 +589,6 @@ export interface AmbrusStudioSaler extends BaseContract {
 
     nft(overrides?: CallOverrides): Promise<BigNumber>
 
-    onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>
-
     price(overrides?: CallOverrides): Promise<BigNumber>
 
     publicSale(overrides?: PayableOverrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>
@@ -644,6 +622,8 @@ export interface AmbrusStudioSaler extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>
 
+    soldCount(overrides?: CallOverrides): Promise<BigNumber>
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -674,6 +654,8 @@ export interface AmbrusStudioSaler extends BaseContract {
       _whitelistSaleDuration: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
+
+    count(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
@@ -712,14 +694,6 @@ export interface AmbrusStudioSaler extends BaseContract {
 
     nft(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
-    onERC721Received(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>
-
     price(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     publicSale(
@@ -754,6 +728,8 @@ export interface AmbrusStudioSaler extends BaseContract {
       _merkleRoot: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>
+
+    soldCount(overrides?: CallOverrides): Promise<PopulatedTransaction>
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
