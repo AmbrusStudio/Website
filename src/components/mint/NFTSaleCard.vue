@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ethers } from 'ethers'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import type { AmbrusStudioSaler } from '@/contracts'
-import { useERC721Contract, useSalerContract, useWallet } from '@/hooks'
+import { useSalerContract, useSalerData, useWallet } from '@/hooks'
 import type { NFTItemEdition, NFTItemInfo } from '@/types'
 import { formatDatetime, isHistorical } from '@/utils'
 
@@ -20,25 +19,19 @@ interface Props {
 interface Emits {
   (e: 'onMintComplete', data?: NFTModalData): void
 }
-interface EditionData {
-  price: string
-  amount: number
-  total: number
-  startTime: number
-}
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 const { ethereum, isConnected } = useWallet()
 
-const editionData = reactive<EditionData>({ price: '0', amount: 0, total: 0, startTime: 0 })
 const salerContract = ref<AmbrusStudioSaler | undefined>(undefined)
+const { price, amount, total, startTime } = useSalerData(salerContract)
 const edition = ref<string>('')
 const isMinting = ref(false)
 const connected = computed(() => isConnected())
-const selectedDate = computed(() => formatDatetime(editionData.startTime))
-const isAvailable = computed(() => isHistorical(editionData.startTime))
-const disabled = computed(() => !(isAvailable.value && editionData.total && connected.value))
+const selectedDate = computed(() => formatDatetime(startTime.value))
+const isAvailable = computed(() => isHistorical(startTime.value))
+const disabled = computed(() => !(isAvailable.value && total.value && connected.value))
 const buttonText = computed(() => {
   if (!connected.value) return 'Connect Wallet'
   if (isAvailable.value) return 'Mint Now'
@@ -69,24 +62,10 @@ watch(
   edition,
   async (value: string) => {
     const selected = props.editions.find((e) => e.value === value)
-    if (selected) {
-      const _salerContract = useSalerContract(ethereum, selected.contract)
-      if (!_salerContract.value) return
-      salerContract.value = _salerContract.value
-
-      const price = await _salerContract.value.price()
-      const total = selected.total
-      const startTime = await _salerContract.value.saleStart()
-      editionData.price = ethers.utils.formatEther(price)
-      editionData.total = total
-      editionData.startTime = startTime.toNumber()
-
-      const nftAddress = await _salerContract.value.nft()
-      const nftContract = useERC721Contract(ethereum, nftAddress)
-      if (!nftContract.value) return
-      const amount = await nftContract.value.balanceOf(_salerContract.value.address)
-      editionData.amount = amount.toNumber()
-    }
+    if (!selected) return
+    const _salerContract = useSalerContract(ethereum, selected.contract)
+    if (!_salerContract.value) return
+    salerContract.value = _salerContract.value
   },
   { immediate: true }
 )
@@ -114,15 +93,12 @@ watch(
       </div>
       <div class="flex flex-col gap-2px mb-12px text-grey-medium" v-if="!disabled">
         <p class="font-semibold text-12px leading-16px uppercase">PRICE</p>
-        <NFTCurrency
-          className="font-semibold text-32px leading-40px text-white"
-          :price="editionData.price"
-        />
+        <NFTCurrency className="font-semibold text-32px leading-40px text-white" :price="price" />
         <div
           class="flex flex-row flex-nowrap justify-between items-center font-normal text-14px leading-18px"
         >
           <p>Available through {{ selectedDate }}</p>
-          <p>{{ editionData.amount }} / {{ editionData.total }} Left</p>
+          <p>{{ amount }} / {{ total }} Left</p>
         </div>
       </div>
       <button
