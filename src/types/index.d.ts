@@ -66,8 +66,6 @@ export type NFTItemEdition = {
   value: string
   /** 版本对应的 AmbrusStudioSaler 合约地址 */
   contract: string
-  /** 版本总量，用于展示 "<amount>/<total> Left" */
-  total: number
   /** 版本颜色配置 */
   style: NFTItemEditionStyle
 }

@@ -25,8 +25,7 @@ const demoNFTItem: NFTItem = {
     {
       name: 'Legendary Edition',
       value: 'legendary',
-      contract: '0x5f9f4D516F24b47A6d233f11Be32Ebbfe115Cdb7',
-      total: 400,
+      contract: '0x71d08c82358ed8Bc3d7af38BfD3517663e9664D4',
       style: {
         background: 'linear-gradient(90deg, #E4AA15 0%, #F0C75D 100%)',
         boxShadow: '0px 0px 8px 1px #FFB800, inset 4px 0px 10px rgba(0, 0, 0, 0.15)'
