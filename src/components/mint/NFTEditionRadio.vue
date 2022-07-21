@@ -2,7 +2,7 @@
 import { useVModel } from '@vueuse/core'
 import { computed, reactive } from 'vue'
 
-import { useSalerContract, useSalerData, useWallet } from '@/hooks'
+import { useReadonlySalerData } from '@/hooks'
 import type { NFTItemEditionStyle } from '@/types'
 
 import NFTCurrency from '../nft/NFTCurrency.vue'
@@ -25,19 +25,14 @@ interface Emits {
 const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 const radioModel = useVModel(props, 'modelValue', emits)
-const { ethereum } = useWallet()
-const salerContract = useSalerContract(ethereum, props.contract)
-const { price, amount } = useSalerData(salerContract)
+const { price, amount } = useReadonlySalerData(props.contract)
 const disabled = computed(() => !amount.value)
 const selected = computed(() => props.value === radioModel.value)
-const labelClass = reactive({
-  'cursor-not-allowed': disabled,
-  'border-1px': !disabled.value,
-  'border-transparent': !disabled.value
-})
+const labelClass = reactive({ 'cursor-not-allowed': disabled })
 const labelStyle = computed(() => ({
   background: props.style.background,
-  boxShadow: selected.value ? props.style.boxShadow : undefined
+  boxShadow: selected.value ? props.style.boxShadow : undefined,
+  borderColor: selected.value ? '#fff' : undefined
 }))
 </script>
 
@@ -53,7 +48,7 @@ const labelStyle = computed(() => ({
       v-model="radioModel"
     />
     <div
-      class="flex flex-row flex-nowrap justify-between items-center px-24px py-20px"
+      class="flex flex-row flex-nowrap justify-between items-center px-24px py-20px border-1px border-transparent"
       :class="labelClass"
       :style="labelStyle"
     >
@@ -63,9 +58,3 @@ const labelStyle = computed(() => ({
     </div>
   </label>
 </template>
-
-<style scoped>
-input[type='radio']:checked + div {
-  @apply border-white;
-}
-</style>
