@@ -32,7 +32,7 @@ export function getChainInfo(): ChainInfo {
   return getChainInfoFromId(chainId || DefaultChainId)!
 }
 
-export function getInfuraId(): string | undefined {
+export function getInfuraKey(): string | undefined {
   const infuraId = import.meta.env.VITE_INFURA_API_KEY
   if (!infuraId) throw new TypeError('VITE_INFURA_API_KEY not set')
   return infuraId
@@ -42,7 +42,7 @@ export function getInfuraUrl(id: string | number): string | undefined {
   const chainInfo = getChainInfoFromId(id)
   if (!chainInfo) return undefined
   if (chainInfo.infuraNameKey) {
-    const infuraId = getInfuraId()
+    const infuraId = getInfuraKey()
     return `https://${chainInfo.infuraNameKey}.infura.io/v3/${infuraId}`
   }
   if (chainInfo.rpcUrl) return chainInfo.rpcUrl

@@ -1,6 +1,7 @@
 export * from './array'
 export * from './chains'
 export * from './datetime'
+export * from './error'
 export * from './image'
 export * from './markdown'
 export * from './material'
