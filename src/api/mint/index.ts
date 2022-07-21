@@ -7,8 +7,8 @@ const demoNFTItem: NFTItem = {
       'https://i.imgur.com/IBqASlD.png',
       'https://i.imgur.com/nmDWQ0m.png'
     ],
-    type: 'E4C Fallen Arena',
-    name: 'Thorn: Bumble Fighter',
+    type: 'E4C Rangers NFT Series 1',
+    name: 'Rin: Heir of Musashi',
     content:
       "Pearce's fixed-wing X6 provides a surprising amount of comfortable living space aboard a compact and highly agile fighter patrol ship. A supremely capable combat vessel with an extended atmoglass canopy provides a conspicuous piloting advantage as well as a way"
   },
@@ -36,15 +36,22 @@ const demoNFTItem: NFTItem = {
   introduction: [
     {
       title: 'NFT Sale',
-      content: 'E4C Ranger Rin NFT\nUltimate Edition\nGold Edition\nRed Edition'
+      content:
+        'Ultimate Edition (15) - English auction & Open-bid 2nd price\n\nGold Edition (450) - Fixed price'
     },
     {
       title: 'NFT Utilities',
-      content: 'E4C Ranger Rin NFT\nUltimate Edition\nGold Edition\nRed Edition'
+      content:
+        'E4C Rangers NFTs’ utilities are mostly the same for different editions. But if you are an Ultimate Edition owner, you’ll earn a lot more benefits in our array of games and more! [Learn more](https://www.ambrus.studio)\n\nWhat you get with Gold Edition:\n\n* 5% revenue share of corresponding hero/skin\n* 10% off in-game discounts\n* Gold loot airdrops\n* In-game asset airdrops\n* 1 free gift to friends'
     },
     {
       title: 'NFT Staking',
-      content: 'E4C Ranger Rin NFT\nUltimate Edition\nGold Edition\nRed Edition'
+      content:
+        'For Gold Edition owners, we offer you a chance to upgrade your NFT to Gold+ and earn more benefits by simply staking your E4C Rangers NFT for 3 months. Each NFT can only upgrade once.\n\nAfter upgraded to Gold+, you’ll get:\n\n* 8% revenue share of corresponding hero/skin\n* 15% off in-game discounts\n* Gold+ loot airdrops\n* More In-game asset airdrops\n* 3 free gift to friends'
+    },
+    {
+      title: 'Additional Information',
+      content: 'Descriptions'
     }
   ]
 }
