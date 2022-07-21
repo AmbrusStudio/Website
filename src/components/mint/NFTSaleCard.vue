@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { ContractTransaction } from 'ethers'
 import { computed, ref, watch } from 'vue'
 
+import { getWhitelistSignature } from '@/api'
 import type { AmbrusStudioSaler } from '@/contracts'
-import { useSalerContract, useSalerData, useWallet } from '@/hooks'
+import { useERC721Contract, useSalerContract, useSalerData, useWallet } from '@/hooks'
 import type { NFTItemEdition, NFTItemInfo } from '@/types'
-import { formatDatetime, isHistorical } from '@/utils'
+import { alertErrorMessage, formatDatetime } from '@/utils'
 
 import MarkdownView from '../markdown/MarkdownView.vue'
 import type { NFTModalData } from '../modal/NFTMintModal.vue'
@@ -22,37 +24,69 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
-const { ethereum, isConnected } = useWallet()
+const { account, ethereum, isConnected } = useWallet()
 
 const salerContract = ref<AmbrusStudioSaler | undefined>(undefined)
-const { price, amount, total, startTime } = useSalerData(salerContract)
+const { price, amount, total, startTime, isWhitelistSaleStart, isPublicSaleStart } =
+  useSalerData(salerContract)
 const edition = ref<string>('')
 const isMinting = ref(false)
 const connected = computed(() => isConnected())
 const selectedDate = computed(() => formatDatetime(startTime.value))
-const isAvailable = computed(() => isHistorical(startTime.value))
-const disabled = computed(() => !(isAvailable.value && total.value && connected.value))
+const saleStart = computed(() => isWhitelistSaleStart() || isPublicSaleStart())
+const disabled = computed(
+  () =>
+    !(
+      props.editions.length &&
+      connected.value &&
+      edition.value &&
+      salerContract.value &&
+      amount.value &&
+      saleStart.value
+    )
+)
 const buttonText = computed(() => {
+  if (!props.editions.length) return 'Coming Soon'
   if (!connected.value) return 'Connect Wallet'
-  if (isAvailable.value) return 'Mint Now'
+  if (!(edition.value && salerContract.value)) return 'Choose an Edition'
+  if (!amount.value) return 'Sold Out'
+  if (isWhitelistSaleStart()) return 'Whitelist Mint'
+  if (isPublicSaleStart()) return 'Mint Now'
   return 'Coming Soon'
 })
+const getNFTInfo = async (address: string, tx: ContractTransaction): Promise<NFTModalData> => {
+  const contract = useERC721Contract(ethereum, address)
+  if (!contract.value) return { images: '', name: '', address: '', transaction: '' }
+  const images = 'https://i.imgur.com/V0xOBYB.png'
+  const name = await contract.value.name()
+  const transaction = tx.hash
+  return { images, name, address, transaction }
+}
 const handleMintClick = async () => {
   if (!salerContract.value) return
+  const modalData: NFTModalData = { images: '', name: '', address: '', transaction: '' }
   try {
     isMinting.value = true
-    const address = salerContract.value.address
-    const saleStart = await salerContract.value.saleStart()
-    console.log('saleStart', saleStart.toString())
-    const modalData: NFTModalData = {
-      images: 'http://localhost:3000/demo/images/nft-image-537.png',
-      name: 'E4C Rangers #537',
-      address,
-      transaction: '0x85'
+
+    const price = await salerContract.value.price()
+    const nftAddress = await salerContract.value.nft()
+
+    if (isWhitelistSaleStart()) {
+      if (!account.value) return
+      const signature = getWhitelistSignature(account.value)
+      const tx = await salerContract.value.whitelistSale(signature, { value: price })
+      const nftData = await getNFTInfo(nftAddress, tx)
+      Object.assign(modalData, { ...nftData })
     }
+    if (isPublicSaleStart()) {
+      const tx = await salerContract.value.publicSale({ value: price })
+      const nftData = await getNFTInfo(nftAddress, tx)
+      Object.assign(modalData, { ...nftData })
+    }
+
     emit('onMintComplete', modalData)
   } catch (error) {
-    console.error('Mint error', error)
+    alertErrorMessage('Mint faild', error)
   } finally {
     isMinting.value = false
   }
@@ -79,7 +113,7 @@ watch(
       <MarkdownView class="text-white font-medium text-14px leading-24px" :src="info.content" />
     </div>
     <form class="flex flex-col" action="#">
-      <div class="flex flex-col gap-12px mb-24px xl:mb-36px" v-if="isAvailable">
+      <div class="flex flex-col gap-12px mb-24px xl:mb-36px" v-if="editions.length">
         <NFTEditionRadio
           v-for="edi in editions"
           :key="`edition-radio-${edi.value}`"
