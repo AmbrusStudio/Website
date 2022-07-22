@@ -2,7 +2,7 @@
 import IconClose from '@components/icons/IconClose.vue'
 import { computed } from 'vue'
 
-import { getImageSet } from '@/utils'
+import { ExplorerDataType, getExplorerLink, getImageSet } from '@/utils'
 
 import BaseModal from './BaseModal.vue'
 import NFTMintModalTrait from './NFTMintModalTrait.vue'
@@ -32,6 +32,10 @@ const imageSet = computed(() => {
   if (Array.isArray(props.images)) return getImageSet(props.images)
   return undefined
 })
+const addressLink = computed(() => getExplorerLink(props.address, ExplorerDataType.ADDRESS))
+const transactionLink = computed(() =>
+  getExplorerLink(props.transaction, ExplorerDataType.TRANSACTION)
+)
 </script>
 
 <template>
@@ -58,8 +62,12 @@ const imageSet = computed(() => {
         />
         <div class="flex flex-col flex-1 gap-12px xl:gap-24px p-24px xl:p-36px backdrop-blur-20px">
           <NFTMintModalTrait title="NFT ID">{{ name }}</NFTMintModalTrait>
-          <NFTMintModalTrait title="Smart Contract Address">{{ address }}</NFTMintModalTrait>
-          <NFTMintModalTrait title="Transaction Hash">{{ transaction }}</NFTMintModalTrait>
+          <NFTMintModalTrait title="Smart Contract Address" :link="addressLink">
+            {{ address }}
+          </NFTMintModalTrait>
+          <NFTMintModalTrait title="Transaction Hash" :link="transactionLink">
+            {{ transaction }}
+          </NFTMintModalTrait>
         </div>
       </div>
     </div>
