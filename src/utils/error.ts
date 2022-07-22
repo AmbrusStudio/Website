@@ -1,21 +1,27 @@
 import type { ErrorCode } from '@ethersproject/logger'
 
-export class EthersError extends Error {
-  public reason?: string
-  public code?: ErrorCode
-  public method?: string
-
-  public constructor(message?: string, code?: ErrorCode, method?: string) {
-    super(message)
-    this.reason = message
-    this.code = code
-    this.method = method
-  }
+export interface EthersError extends Error {
+  reason?: string
+  code?: ErrorCode
+  method?: string
 }
 
 export interface MetaMaskError {
   message?: string
   code?: number
+}
+
+export function isEthersError(error: unknown): error is EthersError {
+  if (
+    typeof error === 'object' &&
+    error &&
+    'reason' in error &&
+    'code' in error &&
+    'message' in error
+  ) {
+    return true
+  }
+  return false
 }
 
 export function isMetaMaskError(error: unknown): error is MetaMaskError {
@@ -27,7 +33,7 @@ export function isMetaMaskError(error: unknown): error is MetaMaskError {
 
 export function alertErrorMessage(message: string, error: unknown): void {
   console.error(message, error)
-  if (error instanceof EthersError) {
+  if (isEthersError(error)) {
     alert(`${message}, ${error.reason}`)
   } else if (isMetaMaskError(error)) {
     alert(`${message}, ${error.message}`)
