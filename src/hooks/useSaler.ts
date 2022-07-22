@@ -1,8 +1,10 @@
 import { ethers } from 'ethers'
-import { type Ref, type UnwrapRef, isRef, reactive, toRefs, unref, watch } from 'vue'
+import { type Ref, isRef, reactive, toRefs, unref, watch } from 'vue'
 
 import { type AmbrusStudioSaler, AmbrusStudioSaler__factory } from '@/contracts'
-import { getChainInfo, getInfuraKey, isBeforeEnding, isHistorical } from '@/utils'
+import { isBeforeEnding, isHistorical } from '@/utils'
+
+import { useReadonlyEthereum } from './useEthereum'
 
 type SalerData = {
   price: string
@@ -71,9 +73,7 @@ type SalerDataRef = {
 
 type SalerDataWithHelpers = SalerDataRef & SalerHelpers
 
-export function useSalerData(
-  contract: Ref<UnwrapRef<AmbrusStudioSaler | undefined>>
-): SalerDataWithHelpers {
+export function useSalerData(contract: Ref<AmbrusStudioSaler | undefined>): SalerDataWithHelpers {
   const salerData = reactive<SalerData>(INITIAL_SALER_DATA)
 
   async function getSalerData() {
@@ -95,10 +95,7 @@ export function useSalerData(
 }
 
 export function useReadonlySalerData(address: string): SalerDataRef {
-  const infuraKey = getInfuraKey()
-  const defaultChain = getChainInfo()
-  const network = ethers.providers.getNetwork(defaultChain.chainId)
-  const ethereum = ethers.getDefaultProvider(network, { infura: infuraKey })
+  const ethereum = useReadonlyEthereum()
   const salerData = reactive<SalerData>(INITIAL_SALER_DATA)
 
   async function getSalerData() {
