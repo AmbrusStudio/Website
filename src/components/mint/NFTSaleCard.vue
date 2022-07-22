@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { ContractTransaction } from 'ethers'
+import { type ContractTransaction, BigNumber, ethers } from 'ethers'
 import { computed, ref, watch } from 'vue'
 
 import { getWhitelistSignature } from '@/api'
-import type { AmbrusStudioSaler } from '@/contracts'
-import { useERC721Contract, useSalerContract, useSalerData, useWallet } from '@/hooks'
+import { type AmbrusStudioSaler, ERC721__factory } from '@/contracts'
+import { useReadonlyEthereum, useSalerContract, useSalerData, useWallet } from '@/hooks'
 import type { NFTItemEdition, NFTItemInfo } from '@/types'
 import { alertErrorMessage, formatDatetime } from '@/utils'
 
@@ -26,7 +26,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 const { account, ethereum, isConnected } = useWallet()
 
-const salerContract = ref<AmbrusStudioSaler | undefined>(undefined)
+const salerContract = ref<AmbrusStudioSaler>()
 const { price, amount, total, startTime, isWhitelistSaleStart, isPublicSaleStart } =
   useSalerData(salerContract)
 const edition = ref<string>('')
@@ -55,11 +55,27 @@ const buttonText = computed(() => {
   return 'Coming Soon'
 })
 const getNFTInfo = async (address: string, tx: ContractTransaction): Promise<NFTModalData> => {
-  const contract = useERC721Contract(ethereum, address)
-  if (!contract.value) return { images: '', name: '', address: '', transaction: '' }
+  // 摆烂了，Vue ref 的 get 有问题，Event filter 又臭又长
+  const ethereum = useReadonlyEthereum()
+  const contract = ERC721__factory.connect(address, ethereum)
   const images = 'https://i.imgur.com/V0xOBYB.png'
-  const name = await contract.value.name()
+  let name = await contract.name() // AmbrusStudioRanger
   const transaction = tx.hash
+  const receipt = await tx.wait()
+  const filteredLogs = receipt.logs.filter((log) => log.address === address)
+  const parsedLog = filteredLogs.map((log) => contract.interface.parseLog(log))
+  // Event Transfer(address,address,uint256)
+  const filteredTransfer = parsedLog.filter(
+    (log) =>
+      log.topic === '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' &&
+      log.args[0] === ethers.constants.AddressZero
+  )
+  if (Array.isArray(filteredTransfer) && filteredTransfer.length > 0) {
+    const tokenId = filteredTransfer[0].args[2]
+    if (typeof tokenId === 'object' && tokenId instanceof BigNumber) {
+      name += ` #${tokenId.toNumber()}`
+    }
+  }
   return { images, name, address, transaction }
 }
 const handleMintClick = async () => {
