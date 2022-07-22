@@ -48,3 +48,9 @@ export function getInfuraUrl(id: string | number): string | undefined {
   if (chainInfo.rpcUrl) return chainInfo.rpcUrl
   return undefined
 }
+
+export function getEtherscanKey(): string | undefined {
+  const etherscan = import.meta.env.VITE_ETHERSCAN_API_KEY
+  if (!etherscan) throw new TypeError('VITE_ETHERSCAN_API_KEY not set')
+  return etherscan
+}
