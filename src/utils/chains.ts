@@ -25,7 +25,7 @@ export function getChainInfoFromId(id: string | number): ChainInfo | undefined {
   return CHAIN_INFO[id as SupportedChainId]
 }
 
-export function getChainInfo(): ChainInfo {
+export function getDefaultChainInfo(): ChainInfo {
   const chainId: string | undefined = import.meta.env.VITE_CHAIN_ID
   if (!chainId) console.warn('VITE_CHAIN_ID not set')
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

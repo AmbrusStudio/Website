@@ -4,9 +4,9 @@ import type {
   IProviderOptions as ProviderOptions
 } from 'web3modal'
 
-import { getChainInfo, getInfuraKey } from '@/utils'
+import { getDefaultChainInfo, getInfuraKey } from '@/utils'
 
-const network = getChainInfo().name
+const network = getDefaultChainInfo().name
 const infuraId = getInfuraKey()
 
 const providerOptions: ProviderOptions = {

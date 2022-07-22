@@ -1,11 +1,11 @@
 import { ethers } from 'ethers'
 
-import { getChainInfo, getEtherscanKey, getInfuraKey } from '@/utils'
+import { getDefaultChainInfo, getEtherscanKey, getInfuraKey } from '@/utils'
 
 export function useReadonlyEthereum(): ethers.providers.BaseProvider {
   const infuraKey = getInfuraKey()
   const etherscanKey = getEtherscanKey()
-  const defaultChain = getChainInfo()
+  const defaultChain = getDefaultChainInfo()
   const network = ethers.providers.getNetwork(defaultChain.chainId)
   const ethereum = ethers.getDefaultProvider(network, {
     etherscan: etherscanKey,

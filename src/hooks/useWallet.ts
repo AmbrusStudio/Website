@@ -6,7 +6,7 @@ import Web3Modal from 'web3modal'
 
 import { web3ModalOptions } from '@/configs'
 import type { UseWallet } from '@/types'
-import { getChainInfo } from '@/utils'
+import { getDefaultChainInfo } from '@/utils'
 
 type WalletState = {
   account: string | null
@@ -28,7 +28,7 @@ const INITIAL_STATE: WalletState = {
 }
 
 const walletState = reactive({ ...INITIAL_STATE })
-const configuredNetwork = getChainInfo()
+const configuredNetwork = getDefaultChainInfo()
 const web3Modal = new Web3Modal(web3ModalOptions)
 
 export function useWallet(): UseWallet {
