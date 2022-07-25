@@ -27,7 +27,7 @@ const handleNavClick = () => {
   <div
     class="nav-item relative flex flex-row flex-nowrap justify-center items-center h-80px xl:h-auto px-24px cursor-pointer"
     :class="navClass"
-    @click.stop.prevent="handleNavClick"
+    @click="handleNavClick"
   >
     <div class="nav-item__line absolute left-0 h-2px w-0 bg-rust" />
     <span

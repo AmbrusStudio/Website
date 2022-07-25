@@ -53,7 +53,11 @@ const handleMobileMenuToggle = () => {
         class="flex flex-row items-center justify-between xl:justify-start h-68px xl:h-auto px-24px xl:p-0"
       >
         <LogoNav />
-        <button class="xl:hidden text-rust" @click.stop.prevent="handleMobileMenuToggle">
+        <button
+          class="xl:hidden text-rust"
+          @click.stop.prevent="handleMobileMenuToggle"
+          title="Nav Toggle"
+        >
           <IconHeaderMenu v-if="!mobileMenuOpen" />
           <IconHeaderClose v-else />
         </button>
