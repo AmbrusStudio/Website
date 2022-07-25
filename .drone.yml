@@ -7,12 +7,12 @@ platform:
   arch: amd64
 
 steps:
-- name: build dev
+- name: build main
   when:
     branch:
-    - testing
+    - main
   commands:
-  - cd /mnt/website-dev
+  - cd /mnt/website-prod
   - git pull
   - yarn
   - yarn build
