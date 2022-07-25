@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Auction } from '@/types/auction'
+import { cleanupHTML } from '@/utils'
 
 interface Props {
   auction: Auction
@@ -33,8 +34,8 @@ defineProps<Props>()
             </p>
             <p
               class="text-sm text-center text-white_1 leading-24px not-italic"
-              v-html="item.content"
-            ></p>
+              v-html="cleanupHTML(item.content)"
+            />
           </section>
         </div>
       </div>
@@ -52,9 +53,10 @@ defineProps<Props>()
         </div>
         <p
           class="text-sm not-italic text-white mt-3 leading-24px notes-content"
-          v-html="auction.notes.content"
-        ></p>
+          v-html="cleanupHTML(auction.notes.content)"
+        />
       </div>
+
       <div class="bg-white p-4 md:p-9 text-center fixed bottom-0 left-0 right-0 xl:static actions">
         <p class="text-xl md:text-2xl not-italic font-bold text-rust leading-24px md:leading-29px">
           {{ auction.actions.text }}
