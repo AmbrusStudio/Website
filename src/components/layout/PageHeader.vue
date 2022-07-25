@@ -50,7 +50,7 @@ const handleMobileMenuToggle = () => {
   >
     <div class="flex flex-col xl:flex-row xl:items-center h-full xl:h-100px xl:px-32px">
       <div
-        class="flex flex-row items-center justify-between xl:justify-start h-68px xl:h-auto px-24px xl:p-0"
+        class="flex flex-row shrink-0 items-center justify-between xl:justify-start h-68px xl:h-auto px-24px xl:p-0"
       >
         <LogoNav />
         <button
