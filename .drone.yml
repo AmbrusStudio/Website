@@ -7,21 +7,21 @@ platform:
   arch: amd64
 
 steps:
-- name: build main
-  when:
-    branch:
-    - main
-  commands:
-  - cd /mnt/website-prod
-  - git pull
-  - yarn
-  - yarn build
-- name: build mint
-  when:
-    branch:
-    - mint
-  commands:
-  - cd /mnt/website-mint
-  - git pull
-  - yarn
-  - yarn build
+  - name: build dev
+    when:
+      branch:
+        - testing
+    commands:
+      - cd /mnt/website-dev
+      - git pull
+      - yarn
+      - yarn build
+  - name: build mint
+    when:
+      branch:
+        - mint
+    commands:
+      - cd /mnt/website-mint
+      - git pull
+      - yarn
+      - yarn build

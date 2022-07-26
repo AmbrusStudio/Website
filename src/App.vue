@@ -8,14 +8,14 @@
             >HOME</router-link
           >
           <div class="show-games">
-            <!-- <div :class="routeType === 'game' ? 'show-info has-act active' : 'show-info has-act'"> -->
-            <div class="show-info">
+            <div :class="routeType === 'game' ? 'show-info has-act active' : 'show-info has-act'">
+              <!-- <div class="show-info"> -->
               E4C: GAMES
               <img
                 src="https://ambrus.s3.amazonaws.com/1654419946109_0.85_header-arrow-1.png"
                 alt=""
               />
-              <span class="soon">soon</span>
+              <!-- <span class="soon">soon</span> -->
             </div>
             <div class="games-list-box hidden">
               <div class="games-list clearfix">
@@ -288,16 +288,16 @@ export default defineComponent({
         })
       }
 
-      // $('.show-games .show-info').bind('click', () => {
-      //   $('.games-list-box').toggle()
-      //   if ($('.games-list-box').is(':visible')) {
-      //     $('header').addClass('games-bg')
-      //     $('.show-info img').addClass('show')
-      //   } else {
-      //     $('header').removeClass('games-bg')
-      //     $('.show-info img').removeClass('show')
-      //   }
-      // })
+      $('.show-games .show-info').bind('click', () => {
+        $('.games-list-box').toggle()
+        if ($('.games-list-box').is(':visible')) {
+          $('header').addClass('games-bg')
+          $('.show-info img').addClass('show')
+        } else {
+          $('header').removeClass('games-bg')
+          $('.show-info img').removeClass('show')
+        }
+      })
 
       $('.show-games').bind('mouseleave', () => {
         if ($(window).width() + getScrollbarWidth() > 960) {
